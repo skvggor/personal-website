@@ -4,7 +4,7 @@ import DirectionsRun from "@mui/icons-material/DirectionsRun";
 import Loading from "@/components/loading/loading";
 import type { IStrava } from "./strava.d";
 
-async function getData(type: string) {
+async function getData(_type: string) {
   try {
     const response = await fetch(
       (process.env.APP_ENV === "development"
@@ -40,7 +40,7 @@ export default async function Strava({ type, color = "#0ea5e9" }: StravaProps) {
     distance: await getData(type),
   };
 
-  const icon = type === "run" ? <DirectionsRun /> : <DirectionsBike />;
+  const _icon = type === "run" ? <DirectionsRun /> : <DirectionsBike />;
 
   return stravaContent.distance != null ? (
     <div
