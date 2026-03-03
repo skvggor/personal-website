@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import type { ReactNode } from "react";
 
+import AnnouncementBar from "@/components/announcementBar/announcementBar";
+import { getAnnouncementBarConfig } from "@/lib/announcement";
 import "./globals.css";
 
 const jost = Jost({ subsets: ["latin"] });
@@ -37,14 +39,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   readonly children: ReactNode;
 }) {
+  const announcementConfig = await getAnnouncementBarConfig();
+
   return (
     <html lang="pt-BR">
-      <body className={jost.className}>{children}</body>
+      <body className={jost.className}>
+        <AnnouncementBar config={announcementConfig} />
+        {children}
+      </body>
     </html>
   );
 }

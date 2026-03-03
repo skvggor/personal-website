@@ -4,8 +4,8 @@ import Header from "@/components/header/header";
 import Listening from "@/components/listening/listening";
 import MadeBy from "@/components/madeBy/madeBy";
 import Mastodon from "@/components/mastodon/mastodon";
-import Strava from "@/components/strava/strava";
 import Social from "@/components/social/social";
+import Strava from "@/components/strava/strava";
 
 export const dynamic = "force-dynamic";
 
