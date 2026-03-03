@@ -65,8 +65,8 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
           type="button"
           onClick={() => setIsVisible(false)}
           className="ml-2 p-1 rounded-full hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-          aria-label="Fechar anúncio"
-          title="Fechar"
+          aria-label="Close announcement"
+          title="Close"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
