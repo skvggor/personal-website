@@ -9,16 +9,13 @@ export default function AboutMe() {
         flex
         flex-col
         items-center
-        justify-center
-        mb-3
-        md:mb-10"
+        justify-center"
     >
       <h2
         className="title
           font-bold
-          text-2xl
-          text-sky-300
-          md:text-4xl"
+          text-[clamp(1.5rem,3vw,2.5rem)]
+          text-sky-300"
       >
         {aboutMeContent.title}
       </h2>

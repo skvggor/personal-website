@@ -93,20 +93,15 @@ export default async function Header() {
         flex-col
         items-center
         justify-center
-        w-full
-        md:flex-row"
+        w-full"
     >
       <section
         className="avatar
-          h-24
+          h-[clamp(6rem,10vw,8rem)]
           mb-3
           relative
           rounded-full
-          w-24
-          md:h-32
-          md:mb-0
-          md:mr-5
-          md:w-32"
+          w-[clamp(6rem,10vw,8rem)]"
       >
         <Image
           src={headerContent.image.src}
@@ -132,15 +127,12 @@ export default async function Header() {
             border-2
             bottom-2
             duration-500
-            h-4
+            h-[clamp(1rem,2vw,1.25rem)]
             right-1
             rounded-full
             transition-all
             z-[2]
-            w-4
-            md:h-5
-            md:right-1
-            md:w-5`}
+            w-[clamp(1rem,2vw,1.25rem)]`}
         />
         <span
           className={`icon-status-ping
@@ -150,15 +142,12 @@ export default async function Header() {
             bottom-2
             duration-1000
             ease-in-out
-            h-4
+            h-[clamp(1rem,2vw,1.25rem)]
             right-1
             rounded-full
             transition
-            w-4
-            z-[1]
-            md:h-5
-            md:right-1
-            md:w-5`}
+            w-[clamp(1rem,2vw,1.25rem)]
+            z-[1]`}
         />
       </section>
 
@@ -167,64 +156,43 @@ export default async function Header() {
           flex
           flex-col
           items-center
-          w-full
-          md:items-start
-          md:w-auto
-        "
+          w-full"
       >
         <h1
           className="name
             font-medium
-            text-5xl
+            text-[clamp(2.5rem,5vw,4rem)]
             text-sky-300
             uppercase
-            md:ml-3
-            md:text-6xl
-            md:tracking-tighter"
+            tracking-[clamp(0.5rem,1vw,1rem)]"
         >
           {headerContent.title}
         </h1>
 
         <section
-          className="border-gradient
-            bg-gradient-to-r from-sky-900 to-sky-300
-            my-5
-            px-px
-            py-px
+          className="flex
+            place-content-center
+            px-4
+            py-3
             rounded-2xl
             w-full
-            md:mt-2
-            md:mb-3
-            md:max-w-lg"
+            max-w-[500px]"
         >
-          <section
-            className="bg-[#020817]
-              flex
-              place-content-center
-              px-4
-              py-3
-              rounded-2xl
-              w-full"
+          <h2
+            className="current-position
+              font-normal
+              text-center
+              text-[clamp(0.75rem,1.5vw,1.125rem)]
+              text-sky-300
+              leading-[clamp(1.25rem,2vw,1.75rem)]
+              py-1"
+            style={{
+              wordBreak: "keep-all",
+              overflowWrap: "break-word",
+            }}
           >
-            <h2
-              className="current-position
-                font-normal
-                text-center
-                text-sm
-                text-sky-300
-                leading-relaxed
-                py-1
-                md:text-base
-                md:text-left
-                md:leading-normal"
-              style={{
-                wordBreak: "keep-all",
-                overflowWrap: "break-word",
-              }}
-            >
-              {headerContent.currentPosition}
-            </h2>
-          </section>
+            {headerContent.currentPosition}
+          </h2>
         </section>
 
         <section className="holder-status ml-3">

@@ -53,11 +53,11 @@ export default async function Strava({ type, color = "#0ea5e9" }: StravaProps) {
         p-3
         rounded-xl
         w-full
-        md:h-auto
-        md:justify-center
-        md:mb-0
-        md:mr-3
-        md:w-auto"
+        min-[1600px]:h-auto
+        min-[1600px]:justify-center
+        min-[1600px]:mb-0
+        min-[1600px]:mr-3
+        min-[1600px]:w-auto"
     >
       <div
         className="icon

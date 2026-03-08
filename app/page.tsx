@@ -1,5 +1,5 @@
 import AboutMe from "@/components/aboutMe/aboutMe";
-import Background from "@/components/background/background";
+import BackgroundTopographic from "@/components/backgroundTopographic/backgroundTopographic";
 import Header from "@/components/header/header";
 import Listening from "@/components/listening/listening";
 import MadeBy from "@/components/madeBy/madeBy";
@@ -12,50 +12,37 @@ export const dynamic = "force-dynamic";
 export default function Home() {
   return (
     <>
-      <Background />
+      <div className="fixed inset-0 bg-gray-950 -z-10" />
+      <BackgroundTopographic />
       <main
         className="main-content
-        bg-gray-950
+        relative
+        z-10
         flex
         flex-col
-        justify-between
-        min-h-[100dvh]
-        pt-10
-        px-3
-        md:pt-12
-        md:px-5
-        tall:min-h-[768px]"
+        min-[1600px]:flex-row
+        h-screen
+        overflow-hidden"
       >
-        <Header />
+        <div className="flex-1 flex flex-col items-center h-full border-b min-[1600px]:border-b-0 min-[1600px]:border-r border-gray-800 p-6 gap-8 min-[1600px]:gap-4 place-content-center">
+          <Header />
+        </div>
 
-        <section
-          className="site-content
-          flex
-          flex-col
-          items-center
-          justify-center
-          w-full"
-        >
+        <div className="flex-1 flex flex-col items-center h-full border-b min-[1600px]:border-b-0 min-[1600px]:border-r border-gray-800 p-6 gap-8 min-[1600px]:gap-4 place-content-center">
           <AboutMe />
           <Social />
-        </section>
+        </div>
 
-        <footer
-          className="site-footer
-          flex
-          flex-col
-          items-center
-          justify-center"
-        >
+        <div className="flex-1 flex flex-col items-center h-full p-6 gap-8 min-[1600px]:gap-4 place-content-center">
           <div
             className="holder
             flex
             flex-col
             items-center
-            items-stretch
             justify-center
-            max-w-[1024px]
-            md:flex-row"
+            gap-8
+            min-[1600px]:gap-4
+            max-w-[1024px]"
           >
             <Strava type="ride" />
             <Listening />
@@ -63,7 +50,7 @@ export default function Home() {
 
           <MadeBy />
           <Mastodon />
-        </footer>
+        </div>
       </main>
     </>
   );

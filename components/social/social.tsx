@@ -65,10 +65,9 @@ export default function Social() {
     >
       <ul
         className="icon-list
-          gap-x-5
+          gap-x-[clamp(1.25rem,2vw,1.5rem)]
           grid
-          grid-cols-4
-          md:gap-x-6"
+          grid-cols-4"
       >
         {renderSocialLinks}
       </ul>
