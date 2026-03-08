@@ -195,12 +195,14 @@ function extractContourSegments(
   return segments;
 }
 
-const GRID_RESOLUTION = 400;
+const GRID_RESOLUTION_DESKTOP = 400;
+const GRID_RESOLUTION_MOBILE = 250;
 const CONTOUR_LEVELS = 14;
 const NOISE_SCALE = 0.006;
 const LINE_OPACITY = 0.22;
 const LINE_WIDTH = 1;
 const MOUSE_INFLUENCE_RADIUS = 0.15;
+const TOUCH_INFLUENCE_RADIUS = 0.22;
 const MOUSE_INFLUENCE_STRENGTH = 0.35;
 const OCTAVES = 4;
 const MOUSE_DRIFT_SPEED = 0.3;
@@ -225,6 +227,7 @@ const BackgroundTopographic = () => {
   const targetOffsetRef = useRef({ x: 0, y: 0 });
   const permRef = useRef<Uint8Array | null>(null);
   const lastFrameRef = useRef(0);
+  const isTouchRef = useRef(false);
 
   const render = useCallback(() => {
     const canvas = canvasRef.current;
@@ -240,7 +243,11 @@ const BackgroundTopographic = () => {
 
     const width = canvas.width;
     const height = canvas.height;
-    const cols = GRID_RESOLUTION;
+    const cssWidth = Number.parseFloat(canvas.style.width);
+    const isMobileViewport = cssWidth < 768;
+    const cols = isMobileViewport
+      ? GRID_RESOLUTION_MOBILE
+      : GRID_RESOLUTION_DESKTOP;
     const rows = Math.round((cols * height) / width);
     const cellW = width / (cols - 1);
     const cellH = height / (rows - 1);
@@ -265,9 +272,12 @@ const BackgroundTopographic = () => {
           const dx = gx - mouseNormX;
           const dy = gy - mouseNormY;
           const dist = Math.sqrt(dx * dx + dy * dy);
+          const radius = isTouchRef.current
+            ? TOUCH_INFLUENCE_RADIUS
+            : MOUSE_INFLUENCE_RADIUS;
 
-          if (dist < MOUSE_INFLUENCE_RADIUS) {
-            const influence = 1 - dist / MOUSE_INFLUENCE_RADIUS;
+          if (dist < radius) {
+            const influence = 1 - dist / radius;
             const smoothInfluence = influence * influence * (3 - 2 * influence);
             value += MOUSE_INFLUENCE_STRENGTH * smoothInfluence;
           }
@@ -287,8 +297,7 @@ const BackgroundTopographic = () => {
     ctx.clearRect(0, 0, width, height);
 
     const dpr = width / Number.parseFloat(canvas.style.width);
-    const cssWidth = Number.parseFloat(canvas.style.width);
-    const isMobile = cssWidth < 768;
+    const isMobile = isMobileViewport;
     const margin = (isMobile ? MAP_MARGIN_MOBILE : MAP_MARGIN_DESKTOP) * dpr;
 
     ctx.beginPath();
@@ -497,6 +506,20 @@ const BackgroundTopographic = () => {
       }
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      isTouchRef.current = true;
+      if (e.touches.length > 0) {
+        mouseRef.current.x = e.touches[0].clientX / window.innerWidth;
+        mouseRef.current.y = e.touches[0].clientY / window.innerHeight;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isTouchRef.current = false;
+      mouseRef.current.x = -1;
+      mouseRef.current.y = -1;
+    };
+
     const handleMouseLeave = () => {
       mouseRef.current.x = -1;
       mouseRef.current.y = -1;
@@ -504,11 +527,12 @@ const BackgroundTopographic = () => {
 
     const animate = (timestamp: number) => {
       const delta = timestamp - lastFrameRef.current;
+      const frameInterval = isTouchRef.current ? 33 : 50;
 
-      if (delta >= 50) {
+      if (delta >= frameInterval) {
         lastFrameRef.current = timestamp;
 
-        const lerpFactor = 0.02;
+        const lerpFactor = isTouchRef.current ? 0.08 : 0.02;
         offsetRef.current.x +=
           (targetOffsetRef.current.x - offsetRef.current.x) * lerpFactor;
         offsetRef.current.y +=
@@ -524,14 +548,18 @@ const BackgroundTopographic = () => {
 
     window.addEventListener("resize", setCanvasSize);
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd);
     window.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", setCanvasSize);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [render]);

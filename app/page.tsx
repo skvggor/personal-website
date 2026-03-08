@@ -21,8 +21,9 @@ export default function Home() {
         flex
         flex-col
         min-[1600px]:flex-row
-        h-screen
-        overflow-hidden"
+        min-h-screen
+        min-[1600px]:h-screen
+        min-[1600px]:overflow-hidden"
       >
         <div className="flex-1 flex flex-col items-center h-full border-b min-[1600px]:border-b-0 min-[1600px]:border-r border-gray-800 p-6 gap-8 min-[1600px]:gap-4 place-content-center">
           <Header />
