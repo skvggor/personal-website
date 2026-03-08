@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Jost } from "next/font/google";
+import { DM_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 
 import AnnouncementBar from "@/components/announcementBar/announcementBar";
 import { getAnnouncementBarConfig } from "@/lib/announcement";
 import "./globals.css";
 
-const jost = Jost({ subsets: ["latin"] });
+const dmMono = DM_Mono({ subsets: ["latin"], weight: "300" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://trve.in"),
@@ -48,7 +48,7 @@ export default async function RootLayout({
 
   return (
     <html lang="pt-BR">
-      <body className={jost.className}>
+      <body className={dmMono.className}>
         <AnnouncementBar config={announcementConfig} />
         {children}
       </body>
