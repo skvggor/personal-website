@@ -2,7 +2,7 @@
 
 Personal website built with Next.js, Material-UI, and Tailwind CSS.
 
-![Screenshot](./public/screenshot.png)
+<img width="2536" height="1550" alt="image" src="https://github.com/user-attachments/assets/9c9f4b1a-e275-43f0-b5bf-4b9b9436bc13" />
 
 ## Tech Stack
 
