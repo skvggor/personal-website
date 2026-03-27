@@ -36,7 +36,7 @@ export default async function Header() {
 
   const headersData = await headers();
   const host = headersData.get("host") || "skvggor";
-  const _domain = host.split(":")[0].split(".")[0];
+  const _domain = process.env.SITE_DOMAIN || host.split(":")[0].split(".")[0];
 
   const headerContent: IHeaderContent = {
     title: _domain,
