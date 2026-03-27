@@ -1,27 +1,46 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-
-interface AnnouncementBarConfig {
-  enabled: boolean;
-  text: string;
-  link: string;
-  target?: string;
-  bgColor?: string;
-  textColor?: string;
-}
-
-interface AnnouncementBarProps {
-  config: AnnouncementBarConfig;
-}
+import { useCallback, useEffect, useState } from "react";
+import AnnouncementTrigger from "@/components/announcementTrigger/announcementTrigger";
+import CloseButton from "@/components/closeButton/closeButton";
+import TopographicPattern from "@/components/topographicPattern/topographicPattern";
+import type { AnnouncementBarProps } from "./announcementBar.d";
 
 export default function AnnouncementBar({ config }: AnnouncementBarProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const [showAnnouncement, setShowAnnouncement] = useState(false);
 
-  if (!config.enabled || !config.text || !isVisible) {
-    return null;
-  }
+  const handleInteraction = useCallback(() => {
+    setShowAnnouncement(true);
+  }, []);
+
+  useEffect(() => {
+    const events = ["click", "scroll", "keydown", "touchstart", "mousemove"];
+
+    events.forEach((event) => {
+      window.addEventListener(event, handleInteraction, {
+        passive: true,
+        once: true,
+      });
+    });
+
+    return () => {
+      events.forEach((event) => {
+        window.removeEventListener(event, handleInteraction);
+      });
+    };
+  }, [handleInteraction]);
+
+  const handleClose = useCallback(() => {
+    setIsVisible(false);
+  }, []);
+
+  const handleReopen = useCallback(() => {
+    setIsVisible(true);
+  }, []);
+
+  if (!config.enabled || !config.text || !showAnnouncement) return null;
 
   const isExternal =
     config.link.startsWith("http://") || config.link.startsWith("https://");
@@ -36,54 +55,50 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
         href: config.link,
       };
 
+  if (!isVisible) return <AnnouncementTrigger onClick={handleReopen} />;
+
   return (
     <div
-      className="announcement-bar w-full py-2.5 px-4 text-center text-sm font-medium relative z-50 backdrop-blur-md"
-      style={{
-        backgroundColor: `${config.bgColor || "#209ae7"}cc`,
-        color: config.textColor || "#ffffff",
-      }}
+      className={`
+        announcement-bar
+        fixed
+        top-3
+        left-1/2
+        z-50
+        max-w-[1366px]
+        w-[calc(100%-24px)]
+        py-2.5
+        px-4
+        text-center
+        bg-gray-950
+        border
+        border-gray-800
+        rounded-none
+        shadow-lg
+        animate-bounce-down
+        overflow-hidden
+      `}
     >
-      <div className="flex items-center justify-center gap-4">
+      <TopographicPattern />
+
+      <div className="relative flex items-center justify-center gap-4">
         {isExternal ? (
           <a
             {...linkProps}
-            className="hover:underline transition-opacity hover:opacity-80"
+            className="hover:underline transition-opacity hover:opacity-80 text-[clamp(0.75rem,2vw,1rem)] text-sky-300"
           >
             {config.text}
           </a>
         ) : (
           <Link
             {...linkProps}
-            className="hover:underline transition-opacity hover:opacity-80"
+            className="hover:underline transition-opacity hover:opacity-80 text-[clamp(0.75rem,2vw,1rem)] text-sky-300"
           >
             {config.text}
           </Link>
         )}
 
-        <button
-          type="button"
-          onClick={() => setIsVisible(false)}
-          className="ml-2 p-1 rounded-full hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-          aria-label="Close announcement"
-          title="Close"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
+        <CloseButton onClick={handleClose} />
       </div>
     </div>
   );

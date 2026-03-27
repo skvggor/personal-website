@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "Marcos Lima (skvggor) - Father, Sk8boarder, Music collector, Street runner, Cyclist & Senior SW dev.",
   description:
     "Father of two wonderful girls • Sk8boarder • Music collector • Street runner • Cyclist #fixedgear • Linux since 2009 • Senior SW dev at @radixeng",
+  icons: {
+    icon: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     siteName: "Marcos Lima (skvggor)",

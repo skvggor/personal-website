@@ -206,6 +206,8 @@ const TOUCH_INFLUENCE_RADIUS = 0.22;
 const MOUSE_INFLUENCE_STRENGTH = 0.35;
 const OCTAVES = 4;
 const MOUSE_DRIFT_SPEED = 0.3;
+const IDLE_DRIFT_SPEED = 0.05;
+const IDLE_DRIFT_CHANGE_INTERVAL = 3000;
 const COORD_GRID_SPACING = 500;
 const COORD_GRID_COLOR = "rgb(30, 80, 140)";
 const COORD_GRID_OPACITY = 0.28;
@@ -228,6 +230,11 @@ const BackgroundTopographic = () => {
   const permRef = useRef<Uint8Array | null>(null);
   const lastFrameRef = useRef(0);
   const isTouchRef = useRef(false);
+  const idleDriftRef = useRef({
+    x: (Math.random() - 0.5) * IDLE_DRIFT_SPEED,
+    y: (Math.random() - 0.5) * IDLE_DRIFT_SPEED,
+  });
+  const lastDriftChangeRef = useRef(0);
 
   const render = useCallback(() => {
     const canvas = canvasRef.current;
@@ -531,6 +538,23 @@ const BackgroundTopographic = () => {
 
       if (delta >= frameInterval) {
         lastFrameRef.current = timestamp;
+
+        const isMouseActive = mouseRef.current.x >= 0;
+
+        if (!isMouseActive) {
+          if (
+            timestamp - lastDriftChangeRef.current >
+            IDLE_DRIFT_CHANGE_INTERVAL
+          ) {
+            lastDriftChangeRef.current = timestamp;
+            idleDriftRef.current = {
+              x: (Math.random() - 0.5) * IDLE_DRIFT_SPEED,
+              y: (Math.random() - 0.5) * IDLE_DRIFT_SPEED,
+            };
+          }
+          targetOffsetRef.current.x += idleDriftRef.current.x * 0.01;
+          targetOffsetRef.current.y += idleDriftRef.current.y * 0.01;
+        }
 
         const lerpFactor = isTouchRef.current ? 0.08 : 0.02;
         offsetRef.current.x +=
