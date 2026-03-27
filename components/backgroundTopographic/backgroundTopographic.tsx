@@ -206,7 +206,7 @@ const TOUCH_INFLUENCE_RADIUS = 0.22;
 const MOUSE_INFLUENCE_STRENGTH = 0.35;
 const OCTAVES = 4;
 const MOUSE_DRIFT_SPEED = 0.3;
-const IDLE_DRIFT_SPEED = 0.05;
+const IDLE_DRIFT_SPEED = 0.15;
 const IDLE_DRIFT_CHANGE_INTERVAL = 3000;
 const COORD_GRID_SPACING = 500;
 const COORD_GRID_COLOR = "rgb(30, 80, 140)";
@@ -552,8 +552,8 @@ const BackgroundTopographic = () => {
               y: (Math.random() - 0.5) * IDLE_DRIFT_SPEED,
             };
           }
-          targetOffsetRef.current.x += idleDriftRef.current.x * 0.01;
-          targetOffsetRef.current.y += idleDriftRef.current.y * 0.01;
+          targetOffsetRef.current.x += idleDriftRef.current.x * 0.03;
+          targetOffsetRef.current.y += idleDriftRef.current.y * 0.03;
         }
 
         const lerpFactor = isTouchRef.current ? 0.08 : 0.02;
