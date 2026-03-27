@@ -35,6 +35,19 @@ npm install
 cp .env.example .env
 ```
 
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `APP_ENV` | Environment mode (`development` or `production`) | No |
+| `SITE_DOMAIN` | Custom domain name displayed in header | No |
+| `URL_STRAVA_API_DEV` | Strava API URL for development | No |
+| `URL_STRAVA_API_PROD` | Strava API URL for production | No |
+| `URL_LASTFM_API_DEV` | Last.fm API URL for development | No |
+| `URL_LASTFM_API_PROD` | Last.fm API URL for production | No |
+| `URL_STATUS_API_DEV` | Status API URL for development | No |
+| `URL_STATUS_API_PROD` | Status API URL for production | No |
+
 ### Run Development Server
 
 ```bash
