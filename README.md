@@ -127,6 +127,12 @@ To update screenshots:
 npm run update-screenshot
 ```
 
+To customize the domain name shown in the header:
+
+```bash
+SITE_DOMAIN=trve npm run update-screenshot
+```
+
 This runs a Docker container with Puppeteer that captures and compresses the images. Requires Docker.
 
 ## Project Structure
