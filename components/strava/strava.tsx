@@ -1,6 +1,7 @@
 import DirectionsBike from "@mui/icons-material/DirectionsBike";
 import DirectionsRun from "@mui/icons-material/DirectionsRun";
 
+import AnimatedNumber from "@/components/animatedNumber/animatedNumber";
 import Loading from "@/components/loading/loading";
 import type { IStrava } from "./strava.d";
 
@@ -103,7 +104,11 @@ export default async function Strava({ type, color = "#0ea5e9" }: StravaProps) {
             text-lg
             text-white/50"
         >
-          {stravaContent.distance} km
+          <AnimatedNumber
+            target={Number.parseFloat(stravaContent.distance)}
+            decimals={1}
+            suffix=" km"
+          />
         </span>
       </div>
     </div>
