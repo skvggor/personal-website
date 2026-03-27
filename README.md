@@ -114,15 +114,31 @@ labels:
   - caddy.encode=zstd gzip
 ```
 
+## Screenshots
+
+The project includes automated screenshot generation for README and OpenGraph meta tags:
+
+- `public/screenshot.png` (1280x1024) - README display
+- `public/og-image.png` (1200x630) - Social media sharing
+
+To update screenshots:
+
+```bash
+npm run update-screenshot
+```
+
+This runs a Docker container with Puppeteer that captures and compresses the images. Requires Docker.
+
 ## Project Structure
 
 ```
 .
 ├── app/          # App Router (Next.js)
-├── public/       # Static files
+├── public/       # Static files (including screenshots)
 ├── components/   # React components
-├── styles/       # Global styles
-└── lib/          # Utilities
+├── content/      # Markdown content
+├── lib/          # Utilities
+└── scripts/      # Automation scripts
 ```
 
 ## Available Scripts
@@ -132,3 +148,4 @@ labels:
 - `start` - Production server
 - `type-check` - TypeScript checking
 - `lint` - Linting with Biome
+- `update-screenshot` - Update README and OpenGraph screenshots using Docker
