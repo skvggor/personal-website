@@ -1,0 +1,47 @@
+FROM node:24.12.0-alpine AS base
+
+RUN apk add --no-cache \
+    chromium \
+    pngquant \
+    optipng \
+    nss \
+    freetype \
+    harfbuzz \
+    ttf-freefont \
+    font-noto-emoji \
+    su-exec
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+FROM base AS deps
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci && npm install tsx
+
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 screenshot && \
+    adduser --system --uid 1001 screenshot
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+COPY tsconfig.json ./
+COPY next.config.ts ./
+COPY postcss.config.mjs ./
+COPY app ./app
+COPY components ./components
+COPY content ./content
+COPY lib ./lib
+COPY public ./public
+COPY scripts ./scripts
+COPY scripts/docker-entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+RUN chown -R screenshot:screenshot /app
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["npx", "tsx", "scripts/screenshot.ts"]
