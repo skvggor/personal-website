@@ -1,5 +1,4 @@
-import DirectionsBike from "@mui/icons-material/DirectionsBike";
-import DirectionsRun from "@mui/icons-material/DirectionsRun";
+import { Bicycle } from "@phosphor-icons/react/dist/ssr";
 
 import AnimatedNumber from "@/components/animatedNumber/animatedNumber";
 import Loading from "@/components/loading/loading";
@@ -32,87 +31,33 @@ async function getData(_type: string) {
 
 interface StravaProps {
   type: "run" | "ride";
-  color?: string;
 }
 
-export default async function Strava({ type, color = "#0ea5e9" }: StravaProps) {
+export default async function Strava({ type }: StravaProps) {
   const stravaContent: IStrava = {
     currentYear: new Date().getFullYear(),
     distance: await getData(type),
   };
 
-  const _icon = type === "run" ? <DirectionsRun /> : <DirectionsBike />;
-
   return stravaContent.distance != null ? (
-    <div
-      className="sport
-        flex
-        flex-row
-        items-center
-        justify-center
-        mb-3
-        p-3
-        rounded-xl
-        w-full
-        min-[1600px]:h-auto
-        min-[1600px]:justify-center
-        min-[1600px]:mb-0
-        min-[1600px]:mr-3
-        min-[1600px]:w-auto"
-    >
-      <div
-        className="icon
-          mr-3"
-      >
-        {type === "run" ? (
-          <DirectionsRun
-            sx={{
-              color,
-              width: 40,
-              height: 40,
-            }}
-          />
-        ) : (
-          <DirectionsBike
-            sx={{
-              color,
-              width: 40,
-              height: 40,
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        className="total
-          flex
-          flex-col"
-      >
-        <h3
-          className="year
-            font-bold
-            mb-1
-            text-sm
-            text-white"
-        >
-          {stravaContent.currentYear}
-        </h3>
-
-        <span
-          className="distance
-            font-light
-            text-lg
-            text-white/50"
-        >
-          <AnimatedNumber
-            target={Number.parseFloat(stravaContent.distance)}
-            decimals={1}
-            suffix=" km"
-          />
-        </span>
-      </div>
+    <div className="sport flex items-center gap-2">
+      <Bicycle
+        size={18}
+        weight="bold"
+        className="text-poster-dark/50"
+      />
+      <span className="text-sm font-bold text-poster-dark/70">
+        <AnimatedNumber
+          target={Number.parseFloat(stravaContent.distance)}
+          decimals={1}
+          suffix=" km"
+        />
+      </span>
+      <span className="text-poster-dark/30 text-[0.7rem] uppercase tracking-widest">
+        {stravaContent.currentYear}
+      </span>
     </div>
   ) : (
-    <Loading serviceName="api strava" />
+    <Loading serviceName="strava" />
   );
 }

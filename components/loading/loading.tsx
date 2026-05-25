@@ -1,7 +1,6 @@
 "use client";
 
-import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
-import LoopIcon from "@mui/icons-material/Loop";
+import { HeartBreak, SpinnerGap } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
 import type { LoadingProps } from "@/components/loading/loading.d";
@@ -25,51 +24,26 @@ export default function Loading({ serviceName }: LoadingProps) {
   }, []);
 
   return (
-    <div
-      className="loading
-        flex
-        flex-row
-        items-center
-        justify-center
-        p-3
-        relative
-        rounded-xl"
-    >
+    <div className="loading flex items-center gap-2 py-2">
       {serviceStatus ? (
         <>
-          <LoopIcon
-            className="animate-spin
-              duration-500
-              mr-3"
-            sx={{ color: "#0ea5e9" }}
-            width={32}
-            height={32}
+          <SpinnerGap
+            className="animate-spin text-poster-dark/40"
+            size={18}
+            weight="bold"
           />
-          <span
-            className="loader
-              animate-pulse
-              duration-500
-              block
-              text-white/30
-              text-sm"
-          >
+          <span className="animate-pulse text-poster-dark/30 text-sm uppercase tracking-wide">
             {messages.loading}
           </span>
         </>
       ) : (
         <>
-          <HeartBrokenIcon
-            className="mr-3 opacity"
-            sx={{ color: "#FFFFFF33" }}
-            width={24}
-            height={24}
+          <HeartBreak
+            className="text-poster-dark/20"
+            size={18}
+            weight="bold"
           />
-          <span
-            className="loader
-              block
-              text-white/20
-              text-sm"
-          >
+          <span className="text-poster-dark/20 text-sm uppercase tracking-wide">
             {messages.serviceUnavailable}
           </span>
         </>
