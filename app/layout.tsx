@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { DM_Mono, VT323 } from "next/font/google";
+import { DM_Mono, Shippori_Mincho, VT323 } from "next/font/google";
 import type { ReactNode } from "react";
 
-import AnnouncementBar from "@/components/announcementBar/announcementBar";
-import { getAnnouncementBarConfig } from "@/lib/announcement";
 import "./globals.css";
 
 const dmMono = DM_Mono({ subsets: ["latin"], weight: "300" });
@@ -11,6 +9,11 @@ const vt323 = VT323({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-vt323",
+});
+const shipporiMincho = Shippori_Mincho({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-shippori",
 });
 
 export const metadata: Metadata = {
@@ -47,17 +50,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   readonly children: ReactNode;
 }) {
-  const announcementConfig = await getAnnouncementBarConfig();
-
   return (
     <html lang="pt-BR">
-      <body className={`${dmMono.className} ${vt323.variable}`}>
-        <AnnouncementBar config={announcementConfig} />
+      <body
+        className={`${dmMono.className} ${vt323.variable} ${shipporiMincho.variable}`}
+      >
         {children}
       </body>
     </html>

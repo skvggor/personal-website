@@ -1,11 +1,13 @@
 "use client";
 
-import BatteryAlertIcon from "@mui/icons-material/BatteryAlert";
-import BatteryCharging50Icon from "@mui/icons-material/BatteryCharging50";
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import LaptopChromebookIcon from "@mui/icons-material/LaptopChromebook";
-import RunCircleIcon from "@mui/icons-material/RunCircle";
-import SpeakerIcon from "@mui/icons-material/Speaker";
+import {
+  BatteryCharging,
+  BatteryWarning,
+  Laptop,
+  MusicNote,
+  SmileyWink,
+  SunHorizon,
+} from "@phosphor-icons/react";
 
 import Loading from "@/components/loading/loading";
 import type {
@@ -14,88 +16,73 @@ import type {
   IStatusData,
 } from "@/components/status/status.d";
 
+const ICON_SIZE = 18;
+const ICON_WEIGHT = "bold" as const;
+
 const statuses: Record<string, IStatus> = {
   weekend: {
-    color: "text-sky-500",
+    color: "text-poster-dark",
     text: "Enjoying the weekend.",
     icon: (
-      <EmojiEmotionsIcon
-        className="mr-1"
-        sx={{
-          color: "#0ea5e9",
-        }}
-        height={24}
-        width={24}
+      <SmileyWink
+        className="mr-1.5"
+        size={ICON_SIZE}
+        weight={ICON_WEIGHT}
       />
     ),
   },
   sleep: {
-    color: "gray-500",
+    color: "text-poster-mid",
     text: "Sleeping.",
     icon: (
-      <BatteryAlertIcon
-        className="mr-1"
-        sx={{
-          color: "#6b7280",
-        }}
-        height={24}
-        width={24}
+      <BatteryWarning
+        className="mr-1.5"
+        size={ICON_SIZE}
+        weight={ICON_WEIGHT}
       />
     ),
   },
   lunch: {
-    color: "text-sky-500",
+    color: "text-poster-dark",
     text: "Having lunch.",
     icon: (
-      <BatteryCharging50Icon
-        className="mr-1"
-        sx={{
-          color: "#0ea5e9",
-        }}
-        height={24}
-        width={24}
+      <BatteryCharging
+        className="mr-1.5"
+        size={ICON_SIZE}
+        weight={ICON_WEIGHT}
       />
     ),
   },
   work: {
-    color: "text-red-700",
+    color: "text-poster-dark",
     text: "At work.",
     icon: (
-      <LaptopChromebookIcon
-        className="mr-1"
-        sx={{
-          color: "#b91c1c",
-        }}
-        height={24}
-        width={24}
+      <Laptop
+        className="mr-1.5"
+        size={ICON_SIZE}
+        weight={ICON_WEIGHT}
       />
     ),
   },
   free: {
-    color: "text-sky-500",
+    color: "text-poster-dark",
     text: "Enjoying the life.",
     icon: (
-      <RunCircleIcon
-        className="mr-1"
-        sx={{
-          color: "#0ea5e9",
-        }}
-        height={24}
-        width={24}
+      <SunHorizon
+        className="mr-1.5"
+        size={ICON_SIZE}
+        weight={ICON_WEIGHT}
       />
     ),
   },
   listening: {
-    color: "text-violet-600",
+    color: "text-poster-dark",
     text: "Listening to music.",
     icon: (
-      <SpeakerIcon
-        className="mr-1"
-        sx={{
-          color: "#7c3aed",
-        }}
-        height={24}
-        width={24}
+      <MusicNote
+        className="mr-1.5"
+        size={ICON_SIZE}
+        weight={ICON_WEIGHT}
       />
     ),
   },
@@ -108,37 +95,13 @@ export default function Status({ dataFromAPI }: IStatusComponentProps) {
   };
 
   return statusContent.status ? (
-    <span
-      className="status
-        block
-        center-x
-        flex
-        items-center
-        text-gray-600
-        w-full"
-    >
-      <span
-        className={`flex
-          items-center
-          mr-1
-          ${statusContent.status.color}`}
-      >
+    <span className="status flex items-center text-poster-dark/50 text-[0.8rem] tracking-wide uppercase">
+      <span className={`flex items-center ${statusContent.status.color}`}>
         {statusContent.status.icon}
-        <span
-          className="time
-            font-bold
-            mr-1"
-        >
-          {statusContent.time}
-        </span>
-        <span
-          className="utc-time
-            text-xs"
-        >
-          (UTC -03:00) &#8213;
-        </span>
+        <span className="font-bold mr-1">{statusContent.time}</span>
+        <span className="text-[0.7rem] mr-1">(UTC-03)</span>
+        <span className="mr-1.5">—</span>
       </span>
-
       {statusContent.status.text}
     </span>
   ) : (

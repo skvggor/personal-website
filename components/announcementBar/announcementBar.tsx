@@ -1,10 +1,9 @@
 "use client";
 
+import { ArrowRight, X } from "@phosphor-icons/react";
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import AnnouncementTrigger from "@/components/announcementTrigger/announcementTrigger";
-import CloseButton from "@/components/closeButton/closeButton";
-import TopographicPattern from "@/components/topographicPattern/topographicPattern";
 import type { AnnouncementBarProps } from "./announcementBar.d";
 
 export default function AnnouncementBar({ config }: AnnouncementBarProps) {
@@ -36,11 +35,9 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
     setIsVisible(false);
   }, []);
 
-  const handleReopen = useCallback(() => {
-    setIsVisible(true);
-  }, []);
-
-  if (!config.enabled || !config.text || !showAnnouncement) return null;
+  if (!config.enabled || !config.text || !showAnnouncement || !isVisible) {
+    return null;
+  }
 
   const isExternal =
     config.link.startsWith("http://") || config.link.startsWith("https://");
@@ -55,51 +52,56 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
         href: config.link,
       };
 
-  if (!isVisible) return <AnnouncementTrigger onClick={handleReopen} />;
+  const linkClassName =
+    "flex items-center gap-2 text-[0.75rem] text-poster-dark/60 transition-colors hover:text-poster-dark";
 
   return (
-    <div
-      className={`
-        announcement-bar
-        fixed
-        top-3
-        left-1/2
-        z-50
-        max-w-[1366px]
-        w-[calc(100%-24px)]
-        py-2.5
-        px-4
-        text-center
-        bg-gray-950
-        border
-        border-gray-800
-        rounded-none
-        shadow-lg
-        animate-bounce-down
-        overflow-hidden
-      `}
-    >
-      <TopographicPattern />
+    <AnimatePresence>
+      <motion.div
+        className="border-b border-poster-dark/8 py-3"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: "auto", opacity: 1 }}
+        exit={{ height: 0, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        <div className="flex items-center justify-between">
+          {isExternal ? (
+            <a
+              {...linkProps}
+              className={linkClassName}
+            >
+              {config.text}
+              <ArrowRight
+                size={12}
+                weight="bold"
+              />
+            </a>
+          ) : (
+            <Link
+              {...linkProps}
+              className={linkClassName}
+            >
+              {config.text}
+              <ArrowRight
+                size={12}
+                weight="bold"
+              />
+            </Link>
+          )}
 
-      <div className="relative flex items-center justify-center gap-4">
-        {isExternal ? (
-          <a
-            {...linkProps}
-            className="hover:underline transition-opacity hover:opacity-80 text-[clamp(0.75rem,2vw,1rem)] text-sky-300"
+          <button
+            type="button"
+            onClick={handleClose}
+            className="p-1 text-poster-dark/20 transition-colors hover:text-poster-dark/50 focus:outline-none"
+            aria-label="Close announcement"
           >
-            {config.text}
-          </a>
-        ) : (
-          <Link
-            {...linkProps}
-            className="hover:underline transition-opacity hover:opacity-80 text-[clamp(0.75rem,2vw,1rem)] text-sky-300"
-          >
-            {config.text}
-          </Link>
-        )}
-
-        <CloseButton onClick={handleClose} />
-      </div>
-    </div>
+            <X
+              size={14}
+              weight="bold"
+            />
+          </button>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

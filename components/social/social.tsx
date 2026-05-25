@@ -1,5 +1,14 @@
-import Image from "next/image";
+"use client";
 
+import {
+  Bicycle,
+  GithubLogo,
+  LinkedinLogo,
+  YoutubeLogo,
+} from "@phosphor-icons/react";
+import { motion } from "motion/react";
+
+import MagneticHover from "@/components/magneticHover/magneticHover";
 import type { ISocial } from "@/components/social/social.d";
 
 export default function Social() {
@@ -9,68 +18,79 @@ export default function Social() {
         id: 1,
         title: "YouTube",
         href: "https://youtube.com/@skvggor",
-        icon: "/icons/youtube.svg",
+        icon: "youtube",
       },
       {
         id: 2,
         title: "GitHub",
         href: "https://github.com/skvggor",
-        icon: "/icons/github.svg",
+        icon: "github",
       },
       {
         id: 3,
         title: "LinkedIn",
         href: "https://www.linkedin.com/in/marcker",
-        icon: "/icons/linkedin.svg",
+        icon: "linkedin",
       },
       {
         id: 4,
         title: "Strava",
         href: "https://www.strava.com/athletes/18616728",
-        icon: "/icons/strava.svg",
+        icon: "strava",
       },
     ],
   };
 
-  const renderSocialLinks = socialContent.links.map((link) => (
-    <li
-      key={link.id}
-      className="item"
-    >
-      <a
-        className="link block p-2 rounded-full transition-all"
-        href={link.href}
-        title={link.title}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src={link.icon}
-          alt={link.title}
-          width={28}
-          height={28}
-          className="w-7 h-7 transition-transform duration-300 hover:scale-110"
-        />
-      </a>
-    </li>
-  ));
+  const iconMap: Record<string, React.ReactNode> = {
+    youtube: (
+      <YoutubeLogo
+        size={22}
+        weight="bold"
+      />
+    ),
+    github: (
+      <GithubLogo
+        size={22}
+        weight="bold"
+      />
+    ),
+    linkedin: (
+      <LinkedinLogo
+        size={22}
+        weight="bold"
+      />
+    ),
+    strava: (
+      <Bicycle
+        size={22}
+        weight="bold"
+      />
+    ),
+  };
 
   return (
-    <section
-      className="social
-        flex
-        flex-col
-        items-center
-        justify-center"
-    >
-      <ul
-        className="icon-list
-          gap-x-[clamp(1.25rem,2vw,1.5rem)]
-          grid
-          grid-cols-4"
-      >
-        {renderSocialLinks}
-      </ul>
+    <section className="social flex items-center gap-6">
+      {socialContent.links.map((link, index) => (
+        <MagneticHover key={link.id}>
+          <motion.a
+            className="flex items-center gap-1.5 text-poster-dark/50 transition-colors hover:text-poster-dark"
+            href={link.href}
+            title={link.title}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08, duration: 0.4 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {iconMap[link.icon]}
+            <span className="text-[0.7rem] font-bold uppercase tracking-widest hidden min-[480px]:inline">
+              {link.title}
+            </span>
+          </motion.a>
+        </MagneticHover>
+      ))}
     </section>
   );
 }

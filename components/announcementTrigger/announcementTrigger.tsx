@@ -1,5 +1,8 @@
 "use client";
 
+import { ChatCircleDots } from "@phosphor-icons/react";
+import { motion } from "motion/react";
+
 interface AnnouncementTriggerProps {
   onClick: () => void;
 }
@@ -8,32 +11,19 @@ export default function AnnouncementTrigger({
   onClick,
 }: AnnouncementTriggerProps) {
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onClick}
-      className={`
-        fixed
-        top-3
-        right-3
-        z-50
-        p-2
-        text-xl
-        bg-gray-950
-        border
-        border-gray-800
-        rounded-none
-        shadow-lg
-        hover:scale-110
-        hover:border-sky-500
-        transition-all
-        focus:outline-none
-        focus:ring-2
-        focus:ring-sky-400/50
-      `}
+      className="fixed top-4 right-8 min-[1440px]:right-[8vw] z-50 p-1.5 text-poster-dark/20 transition-colors hover:text-poster-dark/50 focus:outline-none"
       aria-label="Show announcement"
       title="Show announcement"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
     >
-      🔔
-    </button>
+      <ChatCircleDots
+        size={16}
+        weight="bold"
+      />
+    </motion.button>
   );
 }

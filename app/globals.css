@@ -1,54 +1,96 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Terracotta (赤土) ── default */
+:root,
+[data-theme="terracotta"] {
+  --poster-bg: #c4693e;
+  --poster-bg-light: #d07a4a;
+  --poster-dark: #1e1108;
+  --poster-cream: #f0e0c8;
+  --poster-cream-dim: #d4c4a8;
+  --poster-mid: #8b4a2a;
+  --poster-accent: #a85c35;
+  --poster-line: #2a1810;
+  --poster-icon-filter: brightness(0) opacity(0.7);
+}
+
+/* ── Sumi (墨) ── charcoal ink */
+[data-theme="sumi"] {
+  --poster-bg: #1c1a17;
+  --poster-bg-light: #2a2620;
+  --poster-dark: #d4c4a8;
+  --poster-cream: #d4c4a8;
+  --poster-cream-dim: #8a7e6a;
+  --poster-mid: #6b5c48;
+  --poster-accent: #3a3228;
+  --poster-line: #d4c4a8;
+  --poster-icon-filter: brightness(1) opacity(0.7);
+}
+
+/* ── Matcha (抹茶) ── muted sage */
+[data-theme="matcha"] {
+  --poster-bg: #5e6b50;
+  --poster-bg-light: #6b7a5c;
+  --poster-dark: #1a1e14;
+  --poster-cream: #d8e0c8;
+  --poster-cream-dim: #a8b098;
+  --poster-mid: #3e4a35;
+  --poster-accent: #4e5a42;
+  --poster-line: #1a1e14;
+  --poster-icon-filter: brightness(0) opacity(0.7);
+}
+
+/* ── Washi (和紙) ── warm paper */
+[data-theme="washi"] {
+  --poster-bg: #d8cab0;
+  --poster-bg-light: #e2d6c0;
+  --poster-dark: #2a1810;
+  --poster-cream: #f5efe5;
+  --poster-cream-dim: #b0a088;
+  --poster-mid: #8b7860;
+  --poster-accent: #c0b098;
+  --poster-line: #2a1810;
+  --poster-icon-filter: brightness(0) opacity(0.7);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-poster-bg: var(--poster-bg);
+  --color-poster-bg-light: var(--poster-bg-light);
+  --color-poster-dark: var(--poster-dark);
+  --color-poster-cream: var(--poster-cream);
+  --color-poster-cream-dim: var(--poster-cream-dim);
+  --color-poster-mid: var(--poster-mid);
+  --color-poster-accent: var(--poster-accent);
+  --color-poster-line: var(--poster-line);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--poster-bg);
+  color: var(--poster-dark);
+  overflow-x: hidden;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@media (min-width: 1600px) {
-  html,
-  body {
-    overflow: hidden;
-  }
+::-webkit-scrollbar {
+  width: 4px;
 }
 
-@keyframes bounce-down {
-  0% {
-    transform: translateX(-50%) translateY(-100%);
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(-50%) translateY(10px);
-  }
-  75% {
-    transform: translateX(-50%) translateY(-5px);
-  }
-  100% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.animate-bounce-down {
-  animation: bounce-down 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+::-webkit-scrollbar-thumb {
+  background: var(--poster-mid);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--poster-dark);
 }

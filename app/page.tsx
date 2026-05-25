@@ -1,58 +1,46 @@
-import AboutMe from "@/components/aboutMe/aboutMe";
-import BackgroundTopographic from "@/components/backgroundTopographic/backgroundTopographic";
+import AnnouncementBar from "@/components/announcementBar/announcementBar";
 import Header from "@/components/header/header";
 import Listening from "@/components/listening/listening";
-import MadeBy from "@/components/madeBy/madeBy";
 import Mastodon from "@/components/mastodon/mastodon";
-import Social from "@/components/social/social";
+import OmakaseSeal from "@/components/omakaseSeal/omakaseSeal";
+import SashikoBackground from "@/components/sashikoBackground/sashikoBackground";
+import ScrollReveal from "@/components/scrollReveal/scrollReveal";
 import Strava from "@/components/strava/strava";
+import ThemeSelector from "@/components/themeSelector/themeSelector";
+import { getAnnouncementBarConfig } from "@/lib/announcement";
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
+export default async function Home() {
+  const announcementConfig = await getAnnouncementBarConfig();
+
   return (
     <>
-      <div className="fixed inset-0 bg-gray-950 -z-10" />
-      <BackgroundTopographic />
-      <main
-        className="main-content
-        relative
-        z-10
-        flex
-        flex-col
-        min-[1600px]:flex-row
-        min-h-screen
-        min-[1600px]:h-screen
-        min-[1600px]:overflow-hidden"
-      >
-        <div className="flex-1 flex flex-col items-center h-full border-b min-[1600px]:border-b-0 min-[1600px]:border-r border-gray-800 p-6 gap-8 min-[1600px]:gap-4 place-content-center">
-          <Header />
-        </div>
+      <SashikoBackground />
+      <OmakaseSeal />
+      <ThemeSelector />
 
-        <div className="flex-1 flex flex-col items-center h-full border-b min-[1600px]:border-b-0 min-[1600px]:border-r border-gray-800 p-6 gap-8 min-[1600px]:gap-4 place-content-center">
-          <AboutMe />
-          <Social />
-        </div>
+      <div className="relative z-10 flex min-h-screen flex-col justify-between">
+        <main className="px-8 pt-12 min-[1440px]:px-[8vw] min-[1440px]:pt-[8vh] max-w-[550px] min-[1440px]:max-w-[700px]">
+          <ScrollReveal delay={0.1}>
+            <Header />
+          </ScrollReveal>
+        </main>
 
-        <div className="flex-1 flex flex-col items-center h-full p-6 gap-8 min-[1600px]:gap-4 place-content-center">
-          <div
-            className="holder
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-8
-            min-[1600px]:gap-4
-            max-w-[1024px]"
-          >
-            <Strava type="ride" />
-            <Listening />
-          </div>
+        <div className="px-8 min-[1440px]:px-[8vw]">
+          <AnnouncementBar config={announcementConfig} />
 
-          <MadeBy />
-          <Mastodon />
+          <footer className="py-6 border-t border-poster-dark/8">
+            <ScrollReveal delay={0.4}>
+              <div className="flex flex-wrap items-center gap-8 min-[768px]:gap-12">
+                <Strava type="ride" />
+                <Listening />
+              </div>
+            </ScrollReveal>
+            <Mastodon />
+          </footer>
         </div>
-      </main>
+      </div>
     </>
   );
 }
