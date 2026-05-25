@@ -12,22 +12,17 @@
   },
   "dependencies": {
     "@biomejs/biome": "^2.3.11",
-    "@emotion/cache": "^11.14.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.6",
-    "@mui/material-nextjs": "^7.3.6",
+    "@phosphor-icons/react": "^2.1.10",
+    "motion": "^12.40.0",
     "next": "^16.1.1",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "three": "^0.183.2"
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.183.1",
     "puppeteer": "^24.40.0",
     "tailwindcss": "^4",
     "typescript": "^6.0.2"
