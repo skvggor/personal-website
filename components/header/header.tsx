@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import type { IHeaderContent } from "@/components/header/header.d";
 import LanguageSelector from "@/components/languageSelector/languageSelector";
+import Location from "@/components/location/location";
 import Social from "@/components/social/social";
 import Status from "@/components/status/status";
 import TextScramble from "@/components/textScramble/textScramble";
@@ -95,21 +96,28 @@ export default async function Header() {
 
       <div
         className="animate-fade-in-up"
-        style={{ animationDelay: "0.35s" }}
+        style={{ animationDelay: "0.3s" }}
+      >
+        <Location />
+      </div>
+
+      <div
+        className="animate-fade-in-up"
+        style={{ animationDelay: "0.4s" }}
       >
         <Social />
       </div>
 
       <div
         className="animate-fade-in-up"
-        style={{ animationDelay: "0.5s" }}
+        style={{ animationDelay: "0.55s" }}
       >
         <Status dataFromAPI={headerContent.statusFromAPI} />
       </div>
 
       <div
         className="animate-fade-in-up"
-        style={{ animationDelay: "0.65s" }}
+        style={{ animationDelay: "0.7s" }}
       >
         <LanguageSelector />
       </div>
