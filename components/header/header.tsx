@@ -1,10 +1,7 @@
 import { headers } from "next/headers";
 import Image from "next/image";
 
-import type {
-  IHeaderContent,
-  IStatusIndicator,
-} from "@/components/header/header.d";
+import type { IHeaderContent } from "@/components/header/header.d";
 import Social from "@/components/social/social";
 import Status from "@/components/status/status";
 import TextScramble from "@/components/textScramble/textScramble";
@@ -58,34 +55,19 @@ export default async function Header() {
     },
   };
 
-  const statusIndicators: Record<string, IStatusIndicator> = {
-    weekend: { indicatorBg: "bg-green-700", animate: "animate-ping" },
-    sleep: { indicatorBg: "bg-poster-mid", animate: "animate-none" },
-    lunch: { indicatorBg: "bg-poster-dark", animate: "animate-ping" },
-    work: { indicatorBg: "bg-red-800", animate: "animate-ping" },
-    free: { indicatorBg: "bg-green-700", animate: "animate-ping" },
-    listening: { indicatorBg: "bg-violet-800", animate: "animate-ping" },
-  };
-
   return (
     <header className="site-header flex flex-col items-start w-full gap-6">
       <div
         className="flex items-center gap-4 animate-fade-in-up"
         style={{ animationDelay: "0.05s" }}
       >
-        <section className="avatar relative h-12 w-12 shrink-0 rounded-full">
+        <section className="avatar h-14 w-14 shrink-0 rounded-sm">
           <Image
             src={headerContent.image.src}
             alt={headerContent.image.alt}
             width={headerContent.image.width}
             height={headerContent.image.height}
-            className="aspect-square border-2 border-poster-dark/15 h-full object-cover rounded-full w-full"
-          />
-          <span
-            className={`absolute ${statusIndicators[`${headerContent.statusFromAPI.status}`].indicatorBg} border-poster-bg border-[1.5px] bottom-0 h-3 right-0 rounded-full z-[2] w-3`}
-          />
-          <span
-            className={`absolute ${statusIndicators[`${headerContent.statusFromAPI.status}`].animate} ${statusIndicators[`${headerContent.statusFromAPI.status}`].indicatorBg} bottom-0 h-3 right-0 rounded-full z-[1] w-3`}
+            className="aspect-square border-2 border-poster-dark/20 h-full object-cover rounded-sm w-full grayscale transition-all duration-500 hover:grayscale-0 hover:border-poster-dark/40"
           />
         </section>
 
