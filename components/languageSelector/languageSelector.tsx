@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation, type Locale } from "@/lib/i18n/context";
+import { usePageTransition } from "@/lib/transition/context";
 
 const languages: { id: Locale; label: string }[] = [
   { id: "en", label: "EN" },
@@ -9,6 +10,12 @@ const languages: { id: Locale; label: string }[] = [
 
 export default function LanguageSelector() {
   const { locale, setLocale } = useTranslation();
+  const { triggerTransition } = usePageTransition();
+
+  const handleChange = (newLocale: Locale) => {
+    if (newLocale === locale) return;
+    triggerTransition(() => setLocale(newLocale));
+  };
 
   return (
     <div className="flex items-center gap-1 text-[0.65rem] min-[2560px]:text-[0.9vw] font-bold uppercase tracking-widest">
@@ -19,8 +26,8 @@ export default function LanguageSelector() {
           )}
           <button
             type="button"
-            onClick={() => setLocale(language.id)}
-            className={`transition-colors duration-300 ${
+            onClick={() => handleChange(language.id)}
+            className={`cursor-pointer transition-colors duration-300 ${
               locale === language.id
                 ? "text-poster-dark"
                 : "text-poster-dark/30 hover:text-poster-dark/60"

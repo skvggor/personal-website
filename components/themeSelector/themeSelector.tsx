@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+import { usePageTransition } from "@/lib/transition/context";
+
 interface Theme {
   readonly id: string;
   readonly label: string;
@@ -28,6 +30,7 @@ export default function ThemeSelector() {
   const [active, setActive] = useState("terracotta");
   const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const { triggerTransition } = usePageTransition();
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -44,12 +47,18 @@ export default function ThemeSelector() {
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const handleSelect = useCallback((themeId: string) => {
-    setActive(themeId);
-    setHoveredTheme(null);
-    document.documentElement.setAttribute("data-theme", themeId);
-    localStorage.setItem(STORAGE_KEY, themeId);
-  }, []);
+  const handleSelect = useCallback(
+    (themeId: string) => {
+      if (themeId === active) return;
+      setHoveredTheme(null);
+      triggerTransition(() => {
+        setActive(themeId);
+        document.documentElement.setAttribute("data-theme", themeId);
+        localStorage.setItem(STORAGE_KEY, themeId);
+      });
+    },
+    [active, triggerTransition],
+  );
 
   const handlePointerEnter = useCallback((themeId: string) => {
     setHoveredTheme(themeId);

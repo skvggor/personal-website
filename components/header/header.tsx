@@ -77,16 +77,12 @@ export default async function Header() {
           <h1 className="font-bold text-[clamp(1.6rem,3vw,2.4rem)] min-[2560px]:text-[3.2vw] text-poster-dark leading-none tracking-tight">
             {headerContent.title}
           </h1>
-          <div className="flex items-center gap-3">
-            <TextScramble
-              text={_domain}
-              delay={0.4}
-              duration={800}
-              className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/30 uppercase tracking-[0.2em]"
-            />
-            <span className="text-poster-dark/15 text-[0.6rem]">|</span>
-            <LanguageSelector />
-          </div>
+          <TextScramble
+            text={_domain}
+            delay={0.4}
+            duration={800}
+            className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/30 uppercase tracking-[0.2em]"
+          />
         </div>
       </div>
 
@@ -109,6 +105,13 @@ export default async function Header() {
         style={{ animationDelay: "0.5s" }}
       >
         <Status dataFromAPI={headerContent.statusFromAPI} />
+      </div>
+
+      <div
+        className="animate-fade-in-up"
+        style={{ animationDelay: "0.65s" }}
+      >
+        <LanguageSelector />
       </div>
     </header>
   );
