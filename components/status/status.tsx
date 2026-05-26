@@ -16,8 +16,8 @@ import type {
   IStatusData,
 } from "@/components/status/status.d";
 
-const ICON_SIZE = 18;
 const ICON_WEIGHT = "bold" as const;
+const ICON_CLASS = "mr-1.5 h-[18px] w-[18px] min-[2560px]:h-[1.2vw] min-[2560px]:w-[1.2vw]";
 
 const statuses: Record<string, IStatus> = {
   weekend: {
@@ -25,8 +25,7 @@ const statuses: Record<string, IStatus> = {
     text: "Enjoying the weekend.",
     icon: (
       <SmileyWink
-        className="mr-1.5"
-        size={ICON_SIZE}
+        className={ICON_CLASS}
         weight={ICON_WEIGHT}
       />
     ),
@@ -36,8 +35,7 @@ const statuses: Record<string, IStatus> = {
     text: "Sleeping.",
     icon: (
       <BatteryWarning
-        className="mr-1.5"
-        size={ICON_SIZE}
+        className={ICON_CLASS}
         weight={ICON_WEIGHT}
       />
     ),
@@ -47,8 +45,7 @@ const statuses: Record<string, IStatus> = {
     text: "Having lunch.",
     icon: (
       <BatteryCharging
-        className="mr-1.5"
-        size={ICON_SIZE}
+        className={ICON_CLASS}
         weight={ICON_WEIGHT}
       />
     ),
@@ -58,8 +55,7 @@ const statuses: Record<string, IStatus> = {
     text: "At work.",
     icon: (
       <Laptop
-        className="mr-1.5"
-        size={ICON_SIZE}
+        className={ICON_CLASS}
         weight={ICON_WEIGHT}
       />
     ),
@@ -69,8 +65,7 @@ const statuses: Record<string, IStatus> = {
     text: "Enjoying the life.",
     icon: (
       <SunHorizon
-        className="mr-1.5"
-        size={ICON_SIZE}
+        className={ICON_CLASS}
         weight={ICON_WEIGHT}
       />
     ),
@@ -80,8 +75,7 @@ const statuses: Record<string, IStatus> = {
     text: "Listening to music.",
     icon: (
       <MusicNote
-        className="mr-1.5"
-        size={ICON_SIZE}
+        className={ICON_CLASS}
         weight={ICON_WEIGHT}
       />
     ),
@@ -95,7 +89,7 @@ export default function Status({ dataFromAPI }: IStatusComponentProps) {
   };
 
   return statusContent.status ? (
-    <span className="status flex items-center text-poster-dark/50 text-[0.8rem] tracking-wide uppercase">
+    <span className="status flex items-center text-poster-dark/50 text-[0.8rem] min-[2560px]:text-[1vw] tracking-wide uppercase">
       <span className={`flex items-center ${statusContent.status.color}`}>
         {statusContent.status.icon}
         <span className="font-bold mr-1">{statusContent.time}</span>

@@ -40,20 +40,20 @@ export default async function Strava({ type }: StravaProps) {
   };
 
   return stravaContent.distance != null ? (
-    <div className="sport flex items-center gap-2">
+    <div className="sport flex items-center gap-2 min-[2560px]:gap-3">
       <Bicycle
         size={18}
         weight="bold"
-        className="text-poster-dark/50"
+        className="text-poster-dark/50 min-[2560px]:!h-[1.2vw] min-[2560px]:!w-[1.2vw]"
       />
-      <span className="text-sm font-bold text-poster-dark/70">
+      <span className="text-sm min-[2560px]:text-[1vw] font-bold text-poster-dark/70">
         <AnimatedNumber
           target={Number.parseFloat(stravaContent.distance)}
           decimals={1}
           suffix=" km"
         />
       </span>
-      <span className="text-poster-dark/30 text-[0.7rem] uppercase tracking-widest">
+      <span className="text-poster-dark/30 text-[0.7rem] min-[2560px]:text-[0.8vw] uppercase tracking-widest">
         {stravaContent.currentYear}
       </span>
     </div>
