@@ -71,7 +71,7 @@ export default function Status({ dataFromAPI }: IStatusComponentProps) {
   };
 
   return statusContent.status ? (
-    <span className="status flex items-center text-poster-dark/50 text-[0.8rem] min-[2560px]:text-[1vw] tracking-wide uppercase">
+    <span className="status flex items-center text-poster-dark/80 text-[0.8rem] min-[2560px]:text-[1vw] tracking-wide uppercase">
       <span className={`flex items-center ${statusContent.status.color}`}>
         {statusContent.status.icon}
         <span className="font-bold mr-1">{statusContent.time}</span>

@@ -44,7 +44,7 @@ export default async function Strava({ type }: StravaProps) {
       <Bicycle
         size={18}
         weight="bold"
-        className="text-poster-dark/50 min-[2560px]:!h-[1.2vw] min-[2560px]:!w-[1.2vw]"
+        className="text-poster-dark/80 min-[2560px]:!h-[1.2vw] min-[2560px]:!w-[1.2vw]"
       />
       <span className="text-sm min-[2560px]:text-[1vw] font-bold text-poster-dark/70">
         <AnimatedNumber
@@ -53,7 +53,7 @@ export default async function Strava({ type }: StravaProps) {
           suffix=" km"
         />
       </span>
-      <span className="text-poster-dark/30 text-[0.7rem] min-[2560px]:text-[0.8vw] uppercase tracking-widest">
+      <span className="text-poster-dark/60 text-[0.7rem] min-[2560px]:text-[0.8vw] uppercase tracking-widest">
         {stravaContent.currentYear}
       </span>
     </div>

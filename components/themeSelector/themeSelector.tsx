@@ -11,12 +11,12 @@ interface Theme {
 }
 
 const themes: Theme[] = [
-  { id: "terracotta", label: "赤土", swatch: "#c4693e" },
+  { id: "terracotta", label: "赤土", swatch: "#d89868" },
   { id: "sumi", label: "墨", swatch: "#1c1a17" },
-  { id: "matcha", label: "抹茶", swatch: "#5e6b50" },
+  { id: "matcha", label: "抹茶", swatch: "#354028" },
   { id: "washi", label: "和紙", swatch: "#d8cab0" },
   { id: "ai", label: "藍", swatch: "#1b3a4b" },
-  { id: "sakura", label: "桜", swatch: "#d4a0a0" },
+  { id: "sakura", label: "桜", swatch: "#deb0b0" },
 ];
 
 const STORAGE_KEY = "theme";

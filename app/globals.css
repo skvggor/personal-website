@@ -3,13 +3,13 @@
 /* ── Terracotta (赤土) ── default */
 :root,
 [data-theme="terracotta"] {
-  --poster-bg: #c4693e;
-  --poster-bg-light: #d07a4a;
+  --poster-bg: #d89868;
+  --poster-bg-light: #e0a878;
   --poster-dark: #1e1108;
   --poster-cream: #f0e0c8;
-  --poster-cream-dim: #d4c4a8;
-  --poster-mid: #8b4a2a;
-  --poster-accent: #a85c35;
+  --poster-cream-dim: #c4a488;
+  --poster-mid: #7a4a2a;
+  --poster-accent: #b87040;
   --poster-line: #2a1810;
   --poster-icon-filter: brightness(0) opacity(0.7);
 }
@@ -27,17 +27,17 @@
   --poster-icon-filter: brightness(1) opacity(0.7);
 }
 
-/* ── Matcha (抹茶) ── muted sage */
+/* ── Matcha (抹茶) ── deep moss */
 [data-theme="matcha"] {
-  --poster-bg: #5e6b50;
-  --poster-bg-light: #6b7a5c;
-  --poster-dark: #1a1e14;
+  --poster-bg: #354028;
+  --poster-bg-light: #425030;
+  --poster-dark: #d8e0c8;
   --poster-cream: #d8e0c8;
-  --poster-cream-dim: #a8b098;
-  --poster-mid: #3e4a35;
-  --poster-accent: #4e5a42;
-  --poster-line: #1a1e14;
-  --poster-icon-filter: brightness(0) opacity(0.7);
+  --poster-cream-dim: #8a9878;
+  --poster-mid: #7a8a68;
+  --poster-accent: #4a5a38;
+  --poster-line: #d8e0c8;
+  --poster-icon-filter: brightness(1) opacity(0.7);
 }
 
 /* ── Washi (和紙) ── warm paper */
@@ -68,13 +68,13 @@
 
 /* ── Sakura (桜) ── cherry blossom */
 [data-theme="sakura"] {
-  --poster-bg: #d4a0a0;
-  --poster-bg-light: #deb0b0;
+  --poster-bg: #deb0b0;
+  --poster-bg-light: #e8c0c0;
   --poster-dark: #2e1a1a;
   --poster-cream: #f5e8e8;
   --poster-cream-dim: #b88a8a;
   --poster-mid: #8a5a5a;
-  --poster-accent: #c09090;
+  --poster-accent: #c89898;
   --poster-line: #2e1a1a;
   --poster-icon-filter: brightness(0) opacity(0.7);
 }

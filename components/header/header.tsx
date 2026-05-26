@@ -81,13 +81,13 @@ export default async function Header() {
             text={_domain}
             delay={0.4}
             duration={800}
-            className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/30 uppercase tracking-[0.2em]"
+            className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/60 uppercase tracking-[0.2em]"
           />
         </div>
       </div>
 
       <p
-        className="text-[clamp(0.85rem,1.1vw,1rem)] min-[2560px]:text-[1.15vw] text-poster-dark/50 leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] min-[2560px]:max-w-[35vw] text-pretty animate-fade-in-up"
+        className="text-[clamp(0.85rem,1.1vw,1rem)] min-[2560px]:text-[1.15vw] text-poster-dark leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] min-[2560px]:max-w-[35vw] text-pretty animate-fade-in-up"
         style={{ animationDelay: "0.2s" }}
       >
         <TranslatedText id="bio" />

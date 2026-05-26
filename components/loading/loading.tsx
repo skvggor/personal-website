@@ -25,22 +25,22 @@ export default function Loading({ serviceName }: LoadingProps) {
       {serviceStatus ? (
         <>
           <SpinnerGap
-            className="animate-spin text-poster-dark/40"
+            className="animate-spin text-poster-dark/70"
             size={18}
             weight="bold"
           />
-          <span className="animate-pulse text-poster-dark/30 text-sm uppercase tracking-wide">
+          <span className="animate-pulse text-poster-dark/60 text-sm uppercase tracking-wide">
             {t("loading.loading")}
           </span>
         </>
       ) : (
         <>
           <HeartBreak
-            className="text-poster-dark/20"
+            className="text-poster-dark/50"
             size={18}
             weight="bold"
           />
-          <span className="text-poster-dark/20 text-sm uppercase tracking-wide">
+          <span className="text-poster-dark/60 text-sm uppercase tracking-wide">
             {t("loading.serviceUnavailable", { serviceName: serviceName ?? "" })}
           </span>
         </>

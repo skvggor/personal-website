@@ -56,7 +56,7 @@ export default function ListeningCard({
 
       {/* Track info — typographic */}
       <div className="flex flex-col gap-0.5 min-w-0">
-        <span className="flex items-center gap-1.5 text-poster-dark/40 text-[0.65rem] min-[2560px]:text-[0.7vw] font-bold uppercase tracking-[0.15em]">
+        <span className="flex items-center gap-1.5 text-poster-dark/70 text-[0.65rem] min-[2560px]:text-[0.7vw] font-bold uppercase tracking-[0.15em]">
           {isPlaying ? (
             <Disc
               size={12}
@@ -70,7 +70,7 @@ export default function ListeningCard({
         <span className="font-bold text-poster-dark text-sm min-[2560px]:text-[1vw] leading-tight truncate">
           {trackName}
         </span>
-        <span className="text-poster-dark/45 text-[0.7rem] min-[2560px]:text-[0.8vw] uppercase tracking-widest truncate">
+        <span className="text-poster-dark/70 text-[0.7rem] min-[2560px]:text-[0.8vw] uppercase tracking-widest truncate">
           {artist}
         </span>
       </div>

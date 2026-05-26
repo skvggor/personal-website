@@ -26,11 +26,12 @@ export default function LanguageSelector() {
           )}
           <button
             type="button"
+            suppressHydrationWarning
             onClick={() => handleChange(language.id)}
             className={`cursor-pointer transition-colors duration-300 ${
               locale === language.id
                 ? "text-poster-dark"
-                : "text-poster-dark/30 hover:text-poster-dark/60"
+                : "text-poster-dark/60 hover:text-poster-dark/80"
             }`}
           >
             {language.label}
