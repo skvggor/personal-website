@@ -58,12 +58,12 @@ export default async function Header() {
   };
 
   return (
-    <header className="site-header flex flex-col items-start w-full gap-6 min-[2560px]:gap-10">
+    <header className="site-header flex flex-col items-start w-full gap-6 min-[2560px]:gap-7">
       <div
-        className="flex items-center gap-4 min-[2560px]:gap-6 animate-fade-in-up"
+        className="flex items-center gap-4 min-[2560px]:gap-4 animate-fade-in-up"
         style={{ animationDelay: "0.05s" }}
       >
-        <section className="avatar h-14 w-14 min-[2560px]:h-[4vw] min-[2560px]:w-[4vw] shrink-0 rounded-sm">
+        <section className="avatar h-14 w-14 min-[2560px]:h-[2.8vw] min-[2560px]:w-[2.8vw] shrink-0 rounded-sm">
           <Image
             src={headerContent.image.src}
             alt={headerContent.image.alt}
@@ -74,20 +74,20 @@ export default async function Header() {
         </section>
 
         <div>
-          <h1 className="font-bold text-[clamp(1.6rem,3vw,2.4rem)] min-[2560px]:text-[3.2vw] text-poster-dark leading-none tracking-tight">
+          <h1 className="font-bold text-[clamp(1.6rem,3vw,2.4rem)] min-[2560px]:text-[2.2vw] text-poster-dark leading-none tracking-tight">
             {headerContent.title}
           </h1>
           <TextScramble
             text={_domain}
             delay={0.4}
             duration={800}
-            className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/60 uppercase tracking-[0.2em]"
+            className="text-[0.65rem] min-[2560px]:text-[0.6vw] text-poster-dark/60 uppercase tracking-[0.2em]"
           />
         </div>
       </div>
 
       <p
-        className="text-[clamp(0.85rem,1.1vw,1rem)] min-[2560px]:text-[1.15vw] text-poster-dark leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] min-[2560px]:max-w-[35vw] text-pretty animate-fade-in-up"
+        className="text-[clamp(0.85rem,1.1vw,1rem)] min-[2560px]:text-[0.8vw] text-poster-dark leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] min-[2560px]:max-w-[25vw] text-pretty animate-fade-in-up"
         style={{ animationDelay: "0.2s" }}
       >
         <TranslatedText id="bio" />

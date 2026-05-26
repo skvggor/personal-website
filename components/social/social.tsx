@@ -42,7 +42,7 @@ export default function Social() {
   };
 
   const iconClass =
-    "h-[22px] w-[22px] min-[2560px]:h-[1.5vw] min-[2560px]:w-[1.5vw]";
+    "h-[22px] w-[22px] min-[2560px]:h-[1vw] min-[2560px]:w-[1vw]";
 
   const iconMap: Record<string, React.ReactNode> = {
     youtube: (
@@ -72,7 +72,7 @@ export default function Social() {
   };
 
   return (
-    <section className="social flex items-center gap-6 min-[2560px]:gap-10">
+    <section className="social flex items-center gap-6 min-[2560px]:gap-7">
       {socialContent.links.map((link, index) => (
         <MagneticHover key={link.id}>
           <motion.a
@@ -85,7 +85,7 @@ export default function Social() {
             whileTap={{ scale: 0.95 }}
           >
             {iconMap[link.icon]}
-            <span className="text-[0.7rem] min-[2560px]:text-[0.8vw] font-bold uppercase tracking-widest hidden min-[480px]:inline">
+            <span className="text-[0.7rem] min-[2560px]:text-[0.55vw] font-bold uppercase tracking-widest hidden min-[480px]:inline">
               {link.title}
             </span>
           </motion.a>

@@ -18,19 +18,19 @@ export default async function Home() {
     <>
       <SashikoBackground />
       <OmakaseSeal />
-      <ThemeSelector />
 
       <PageTransition>
+        <ThemeSelector />
         <div className="relative z-10 flex h-dvh flex-col justify-between">
-          <main className="flex-1 min-h-0 overflow-y-auto px-8 pt-12 min-[1440px]:px-[8vw] min-[1440px]:pt-[8vh] min-[2560px]:px-[6vw] min-[2560px]:pt-[6vh] max-w-[550px] min-[1440px]:max-w-[700px] min-[2560px]:max-w-[50vw]">
+          <main className="flex-1 min-h-0 overflow-y-auto px-8 pt-12 min-[1440px]:px-[8vw] min-[1440px]:pt-[8vh] min-[2560px]:px-[6vw] min-[2560px]:pt-[6vh] max-w-[550px] min-[1440px]:max-w-[700px] min-[2560px]:max-w-[35vw]">
             <Header />
           </main>
 
           <div className="shrink-0 px-8 min-[1440px]:px-[8vw] min-[2560px]:px-[6vw]">
             <AnnouncementBar config={announcementConfig} />
 
-            <footer className="py-6 min-[2560px]:py-10 border-t border-poster-dark/8">
-              <div className="flex flex-col gap-4 min-[2560px]:gap-6">
+            <footer className="py-6 min-[2560px]:py-7 border-t border-poster-dark/8">
+              <div className="flex flex-col gap-4 min-[2560px]:gap-4">
                 <div
                   className="animate-fade-in-up"
                   style={{ animationDelay: "0.7s" }}

@@ -18,7 +18,7 @@ import { useTranslation } from "@/lib/i18n/context";
 import type { ReactNode } from "react";
 
 const ICON_WEIGHT = "bold" as const;
-const ICON_CLASS = "mr-1.5 h-[18px] w-[18px] min-[2560px]:h-[1.2vw] min-[2560px]:w-[1.2vw]";
+const ICON_CLASS = "mr-1.5 h-[18px] w-[18px] min-[2560px]:h-[0.85vw] min-[2560px]:w-[0.85vw]";
 
 interface StatusConfig {
   color: string;
@@ -71,7 +71,7 @@ export default function Status({ dataFromAPI }: IStatusComponentProps) {
   };
 
   return statusContent.status ? (
-    <span className="status flex items-center text-poster-dark/80 text-[0.8rem] min-[2560px]:text-[1vw] tracking-wide uppercase">
+    <span className="status flex items-center text-poster-dark/80 text-[0.8rem] min-[2560px]:text-[0.7vw] tracking-wide uppercase">
       <span className={`flex items-center ${statusContent.status.color}`}>
         {statusContent.status.icon}
         <span className="font-bold mr-1">{statusContent.time}</span>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Globe } from "@phosphor-icons/react";
 import { useTranslation, type Locale } from "@/lib/i18n/context";
 import { usePageTransition } from "@/lib/transition/context";
 
@@ -18,7 +19,8 @@ export default function LanguageSelector() {
   };
 
   return (
-    <div className="flex items-center gap-1 text-[0.65rem] min-[2560px]:text-[0.9vw] font-bold uppercase tracking-widest">
+    <div className="flex items-center gap-1.5 text-[0.65rem] min-[2560px]:text-[0.6vw] font-bold uppercase tracking-widest text-poster-dark/60">
+      <Globe weight="bold" className="h-[18px] w-[18px] min-[2560px]:h-[0.85vw] min-[2560px]:w-[0.85vw]" />
       {languages.map((language, index) => (
         <span key={language.id} className="flex items-center">
           {index > 0 && (

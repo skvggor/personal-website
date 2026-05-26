@@ -28,6 +28,7 @@ const SIZES = {
 
 export default function ThemeSelector() {
   const [active, setActive] = useState("terracotta");
+  const [displayActive, setDisplayActive] = useState("terracotta");
   const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const { triggerTransition } = usePageTransition();
@@ -36,6 +37,7 @@ export default function ThemeSelector() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored && themes.some((theme) => theme.id === stored)) {
       setActive(stored);
+      setDisplayActive(stored);
       document.documentElement.setAttribute("data-theme", stored);
     }
 
@@ -53,6 +55,7 @@ export default function ThemeSelector() {
       setHoveredTheme(null);
       triggerTransition(() => {
         setActive(themeId);
+        setDisplayActive(themeId);
         document.documentElement.setAttribute("data-theme", themeId);
         localStorage.setItem(STORAGE_KEY, themeId);
       });
@@ -75,9 +78,9 @@ export default function ThemeSelector() {
       className="fixed right-2 min-[2560px]:right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-0 min-[2560px]:gap-1 animate-fade-in-slide-right"
       style={{ animationDelay: "1s" }}
     >
-      {themes.map((theme) => {
+      {[...themes].sort((a, b) => (a.id === displayActive ? -1 : b.id === displayActive ? 1 : 0)).map((theme) => {
         const isExpanded = hoveredTheme === theme.id;
-        const isActive = active === theme.id;
+        const isActive = displayActive === theme.id;
 
         return (
           <button
@@ -86,7 +89,7 @@ export default function ThemeSelector() {
             onClick={() => handleSelect(theme.id)}
             onPointerEnter={() => handlePointerEnter(theme.id)}
             onPointerLeave={handlePointerLeave}
-            className="flex items-center justify-end h-10 min-[2560px]:h-12 gap-2 min-[2560px]:gap-3 pr-3 min-[2560px]:pr-4 rounded-full transition-all duration-300 ease-out focus:outline-none"
+            className="cursor-pointer flex items-center justify-end h-10 min-[2560px]:h-12 gap-2 min-[2560px]:gap-3 pr-3 min-[2560px]:pr-4 rounded-full transition-all duration-300 ease-out focus:outline-none"
             style={{
               width: isExpanded ? "auto" : sizes.collapsed,
               paddingLeft: isExpanded ? sizes.padding : "0",
