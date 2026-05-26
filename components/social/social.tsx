@@ -73,15 +73,12 @@ export default function Social() {
       {socialContent.links.map((link, index) => (
         <MagneticHover key={link.id}>
           <motion.a
-            className="flex items-center gap-1.5 text-poster-dark/50 transition-colors hover:text-poster-dark"
+            className="flex items-center gap-1.5 text-poster-dark/50 transition-colors hover:text-poster-dark animate-fade-in-up"
+            style={{ animationDelay: `${0.4 + index * 0.1}s` }}
             href={link.href}
             title={link.title}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.08, duration: 0.4 }}
             whileTap={{ scale: 0.95 }}
           >
             {iconMap[link.icon]}

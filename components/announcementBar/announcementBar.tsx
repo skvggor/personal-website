@@ -6,36 +6,25 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import type { AnnouncementBarProps } from "./announcementBar.d";
 
-export default function AnnouncementBar({ config }: AnnouncementBarProps) {
-  const [isVisible, setIsVisible] = useState(true);
-  const [showAnnouncement, setShowAnnouncement] = useState(false);
+const STORAGE_KEY = "announcement-dismissed";
 
-  const handleInteraction = useCallback(() => {
-    setShowAnnouncement(true);
-  }, []);
+export default function AnnouncementBar({ config }: AnnouncementBarProps) {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const events = ["click", "scroll", "keydown", "touchstart", "mousemove"];
-
-    events.forEach((event) => {
-      window.addEventListener(event, handleInteraction, {
-        passive: true,
-        once: true,
-      });
-    });
-
-    return () => {
-      events.forEach((event) => {
-        window.removeEventListener(event, handleInteraction);
-      });
-    };
-  }, [handleInteraction]);
+    if (!config.enabled || !config.text) return;
+    const dismissed = sessionStorage.getItem(STORAGE_KEY);
+    if (dismissed !== config.text) {
+      setIsVisible(true);
+    }
+  }, [config.enabled, config.text]);
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
-  }, []);
+    sessionStorage.setItem(STORAGE_KEY, config.text);
+  }, [config.text]);
 
-  if (!config.enabled || !config.text || !showAnnouncement || !isVisible) {
+  if (!config.enabled || !config.text || !isVisible) {
     return null;
   }
 
@@ -52,56 +41,58 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
         href: config.link,
       };
 
-  const linkClassName =
-    "flex items-center gap-2 text-[0.75rem] text-poster-dark/60 transition-colors hover:text-poster-dark";
+  const linkContent = (
+    <>
+      <span className="flex-1">{config.text}</span>
+      <ArrowRight
+        size={12}
+        weight="bold"
+        className="shrink-0"
+      />
+    </>
+  );
 
   return (
     <AnimatePresence>
-      <motion.div
-        className="border-b border-poster-dark/8 py-3"
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: "auto", opacity: 1 }}
-        exit={{ height: 0, opacity: 0 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
-        <div className="flex items-center justify-between">
-          {isExternal ? (
-            <a
-              {...linkProps}
-              className={linkClassName}
-            >
-              {config.text}
-              <ArrowRight
-                size={12}
-                weight="bold"
-              />
-            </a>
-          ) : (
-            <Link
-              {...linkProps}
-              className={linkClassName}
-            >
-              {config.text}
-              <ArrowRight
-                size={12}
-                weight="bold"
-              />
-            </Link>
-          )}
+      {isVisible && (
+        <motion.div
+          className="border-l-2 border-poster-dark/25 pl-3 py-3 mb-2"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -10 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <div className="flex items-start gap-3">
+            {isExternal ? (
+              <a
+                {...linkProps}
+                className="flex items-center gap-2 text-[0.75rem] text-poster-dark/50 leading-relaxed transition-colors hover:text-poster-dark"
+              >
+                {linkContent}
+              </a>
+            ) : (
+              <Link
+                {...linkProps}
+                className="flex items-center gap-2 text-[0.75rem] text-poster-dark/50 leading-relaxed transition-colors hover:text-poster-dark"
+              >
+                {linkContent}
+              </Link>
+            )}
 
-          <button
-            type="button"
-            onClick={handleClose}
-            className="p-1 text-poster-dark/20 transition-colors hover:text-poster-dark/50 focus:outline-none"
-            aria-label="Close announcement"
-          >
-            <X
-              size={14}
-              weight="bold"
-            />
-          </button>
-        </div>
-      </motion.div>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="shrink-0 mt-0.5 p-1 text-poster-dark/20 transition-colors hover:text-poster-dark/50 focus:outline-none"
+              aria-label="Close announcement"
+            >
+              <X
+                size={12}
+                weight="bold"
+              />
+            </button>
+          </div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }
