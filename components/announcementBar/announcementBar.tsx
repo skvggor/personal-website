@@ -5,11 +5,17 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import type { AnnouncementBarProps } from "./announcementBar.d";
+import { useTranslation } from "@/lib/i18n/context";
 
 const STORAGE_KEY = "announcement-dismissed";
 
 export default function AnnouncementBar({ config }: AnnouncementBarProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useTranslation();
+
+  const displayText = config.translationKey
+    ? t(config.translationKey)
+    : config.text;
 
   useEffect(() => {
     if (!config.enabled || !config.text) return;
@@ -43,7 +49,7 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
 
   const linkContent = (
     <>
-      <span className="flex-1">{config.text}</span>
+      <span className="flex-1">{displayText}</span>
       <ArrowRight
         size={12}
         weight="bold"

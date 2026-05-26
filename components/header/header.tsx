@@ -2,9 +2,11 @@ import { headers } from "next/headers";
 import Image from "next/image";
 
 import type { IHeaderContent } from "@/components/header/header.d";
+import LanguageSelector from "@/components/languageSelector/languageSelector";
 import Social from "@/components/social/social";
 import Status from "@/components/status/status";
 import TextScramble from "@/components/textScramble/textScramble";
+import TranslatedText from "@/lib/i18n/translatedText";
 
 async function getData() {
   try {
@@ -75,12 +77,16 @@ export default async function Header() {
           <h1 className="font-bold text-[clamp(1.6rem,3vw,2.4rem)] min-[2560px]:text-[3.2vw] text-poster-dark leading-none tracking-tight">
             {headerContent.title}
           </h1>
-          <TextScramble
-            text={_domain}
-            delay={0.4}
-            duration={800}
-            className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/30 uppercase tracking-[0.2em]"
-          />
+          <div className="flex items-center gap-3">
+            <TextScramble
+              text={_domain}
+              delay={0.4}
+              duration={800}
+              className="text-[0.65rem] min-[2560px]:text-[0.9vw] text-poster-dark/30 uppercase tracking-[0.2em]"
+            />
+            <span className="text-poster-dark/15 text-[0.6rem]">|</span>
+            <LanguageSelector />
+          </div>
         </div>
       </div>
 
@@ -88,8 +94,7 @@ export default async function Header() {
         className="text-[clamp(0.85rem,1.1vw,1rem)] min-[2560px]:text-[1.15vw] text-poster-dark/50 leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] min-[2560px]:max-w-[35vw] text-pretty animate-fade-in-up"
         style={{ animationDelay: "0.2s" }}
       >
-        Father of two, software developer, fixed gear cyclist and music
-        collector based in Brazil.
+        <TranslatedText id="bio" />
       </p>
 
       <div

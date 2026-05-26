@@ -13,5 +13,5 @@ export interface IStatusComponentProps {
 
 export interface IStatusData {
   time: string;
-  status: IStatus;
+  status: IStatus | undefined;
 }

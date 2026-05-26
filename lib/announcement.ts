@@ -4,6 +4,7 @@ import { join } from "node:path";
 export interface AnnouncementBarConfig {
   enabled: boolean;
   text: string;
+  translationKey?: string;
   link: string;
   target?: string;
   bgColor?: string;
@@ -43,6 +44,7 @@ function parseFrontmatter(content: string): AnnouncementBarConfig {
     enabled: (config.enabled as boolean) ?? false,
     text: (config.text as string) ?? "",
     link: (config.link as string) ?? "",
+    translationKey: (config.translationKey as string) ?? undefined,
     target: (config.target as string) ?? "_blank",
     bgColor: (config.bgColor as string) ?? "#209ae7",
     textColor: (config.textColor as string) ?? "#ffffff",

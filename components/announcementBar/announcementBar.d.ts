@@ -1,6 +1,7 @@
 export interface AnnouncementBarConfig {
   enabled: boolean;
   text: string;
+  translationKey?: string;
   link: string;
   target?: string;
   bgColor?: string;

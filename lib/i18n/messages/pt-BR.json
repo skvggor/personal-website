@@ -1,0 +1,26 @@
+{
+  "bio": "Pai de duas, desenvolvedor de software, skatista, ciclista fixed gear e colecionador de música no Brasil.",
+  "status": {
+    "weekend": "Curtindo o final de semana.",
+    "sleep": "Dormindo.",
+    "lunch": "Almoçando.",
+    "work": "Trabalhando.",
+    "free": "Aproveitando a vida.",
+    "listening": "Ouvindo música."
+  },
+  "listening": {
+    "nowPlaying": "Ouvindo agora",
+    "lastPlayed": "Última reprodução"
+  },
+  "loading": {
+    "loading": "carregando",
+    "serviceUnavailable": "serviço {serviceName} indisponível"
+  },
+  "announcement": {
+    "klangbild": "Conheça meu novo projeto Klangbild para gerar visualizadores de música em vídeo 4K."
+  },
+  "metadata": {
+    "title": "Marcos Lima — Desenvolvedor de Software",
+    "description": "Pai de duas, desenvolvedor de software, skatista, ciclista fixed gear e colecionador de música no Brasil."
+  }
+}

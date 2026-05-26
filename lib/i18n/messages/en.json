@@ -1,0 +1,26 @@
+{
+  "bio": "Father of two, software developer, skateboarder, fixed gear cyclist and music collector based in Brazil.",
+  "status": {
+    "weekend": "Enjoying the weekend.",
+    "sleep": "Sleeping.",
+    "lunch": "Having lunch.",
+    "work": "At work.",
+    "free": "Enjoying the life.",
+    "listening": "Listening to music."
+  },
+  "listening": {
+    "nowPlaying": "Listening now",
+    "lastPlayed": "Last played"
+  },
+  "loading": {
+    "loading": "loading",
+    "serviceUnavailable": "service {serviceName} unavailable"
+  },
+  "announcement": {
+    "klangbild": "Check out my new project Klangbild for generating 4K video visualizers for music."
+  },
+  "metadata": {
+    "title": "Marcos Lima — Software Developer",
+    "description": "Father of two, software developer, skateboarder, fixed gear cyclist and music collector based in Brazil."
+  }
+}

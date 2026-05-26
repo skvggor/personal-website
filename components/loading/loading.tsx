@@ -4,14 +4,11 @@ import { HeartBreak, SpinnerGap } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
 import type { LoadingProps } from "@/components/loading/loading.d";
+import { useTranslation } from "@/lib/i18n/context";
 
 export default function Loading({ serviceName }: LoadingProps) {
   const [serviceStatus, setServiceStatus] = useState<boolean>(true);
-
-  const messages = {
-    loading: "loading",
-    serviceUnavailable: `service ${serviceName ?? ""} unavailable`,
-  };
+  const { t } = useTranslation();
 
   useEffect(() => {
     const TIMEOUT_DELAY = 7000;
@@ -33,7 +30,7 @@ export default function Loading({ serviceName }: LoadingProps) {
             weight="bold"
           />
           <span className="animate-pulse text-poster-dark/30 text-sm uppercase tracking-wide">
-            {messages.loading}
+            {t("loading.loading")}
           </span>
         </>
       ) : (
@@ -44,7 +41,7 @@ export default function Loading({ serviceName }: LoadingProps) {
             weight="bold"
           />
           <span className="text-poster-dark/20 text-sm uppercase tracking-wide">
-            {messages.serviceUnavailable}
+            {t("loading.serviceUnavailable", { serviceName: serviceName ?? "" })}
           </span>
         </>
       )}
