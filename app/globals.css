@@ -53,6 +53,32 @@
   --poster-icon-filter: brightness(0) opacity(0.7);
 }
 
+/* ── Ai (藍) ── japanese indigo */
+[data-theme="ai"] {
+  --poster-bg: #1b3a4b;
+  --poster-bg-light: #234d63;
+  --poster-dark: #c8d8e4;
+  --poster-cream: #c8d8e4;
+  --poster-cream-dim: #7a9ab0;
+  --poster-mid: #4a7a94;
+  --poster-accent: #2a5a72;
+  --poster-line: #c8d8e4;
+  --poster-icon-filter: brightness(1) opacity(0.7);
+}
+
+/* ── Sakura (桜) ── cherry blossom */
+[data-theme="sakura"] {
+  --poster-bg: #d4a0a0;
+  --poster-bg-light: #deb0b0;
+  --poster-dark: #2e1a1a;
+  --poster-cream: #f5e8e8;
+  --poster-cream-dim: #b88a8a;
+  --poster-mid: #8a5a5a;
+  --poster-accent: #c09090;
+  --poster-line: #2e1a1a;
+  --poster-icon-filter: brightness(0) opacity(0.7);
+}
+
 @theme inline {
   --color-poster-bg: var(--poster-bg);
   --color-poster-bg-light: var(--poster-bg-light);
@@ -94,3 +120,31 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--poster-dark);
 }
+
+@keyframes slide-up {
+  from { transform: translateY(20px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slide-right {
+  from { transform: translateX(10px); }
+  to { transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+.animate-fade-in-up {
+  animation: slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in-slide-right {
+  animation: slide-right 0.5s ease both;
+}
+
+.animate-fade-in-scale {
+  animation: scale-in 1s ease-out both;
+}
+

@@ -59,9 +59,9 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
     <AnimatePresence>
       <motion.div
         className="border-b border-poster-dark/8 py-3"
-        initial={{ height: 0, opacity: 0 }}
         animate={{ height: "auto", opacity: 1 }}
         exit={{ height: 0, opacity: 0 }}
+        style={{ overflow: "hidden" }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <div className="flex items-center justify-between">

@@ -4,7 +4,6 @@ import Listening from "@/components/listening/listening";
 import Mastodon from "@/components/mastodon/mastodon";
 import OmakaseSeal from "@/components/omakaseSeal/omakaseSeal";
 import SashikoBackground from "@/components/sashikoBackground/sashikoBackground";
-import ScrollReveal from "@/components/scrollReveal/scrollReveal";
 import Strava from "@/components/strava/strava";
 import ThemeSelector from "@/components/themeSelector/themeSelector";
 import { getAnnouncementBarConfig } from "@/lib/announcement";
@@ -20,23 +19,29 @@ export default async function Home() {
       <OmakaseSeal />
       <ThemeSelector />
 
-      <div className="relative z-10 flex min-h-screen flex-col justify-between">
-        <main className="px-8 pt-12 min-[1440px]:px-[8vw] min-[1440px]:pt-[8vh] max-w-[550px] min-[1440px]:max-w-[700px]">
-          <ScrollReveal delay={0.1}>
-            <Header />
-          </ScrollReveal>
+      <div className="relative z-10 flex h-dvh flex-col justify-between">
+        <main className="flex-1 min-h-0 overflow-y-auto px-8 pt-12 min-[1440px]:px-[8vw] min-[1440px]:pt-[8vh] max-w-[550px] min-[1440px]:max-w-[700px]">
+          <Header />
         </main>
 
-        <div className="px-8 min-[1440px]:px-[8vw]">
+        <div className="shrink-0 px-8 min-[1440px]:px-[8vw]">
           <AnnouncementBar config={announcementConfig} />
 
           <footer className="py-6 border-t border-poster-dark/8">
-            <ScrollReveal delay={0.4}>
-              <div className="flex flex-wrap items-center gap-8 min-[768px]:gap-12">
+            <div className="flex flex-wrap items-center gap-8 min-[768px]:gap-12">
+              <div
+                className="animate-fade-in-up"
+                style={{ animationDelay: "0.7s" }}
+              >
                 <Strava type="ride" />
+              </div>
+              <div
+                className="animate-fade-in-up"
+                style={{ animationDelay: "0.85s" }}
+              >
                 <Listening />
               </div>
-            </ScrollReveal>
+            </div>
             <Mastodon />
           </footer>
         </div>

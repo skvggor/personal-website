@@ -7,6 +7,7 @@ import type {
 } from "@/components/header/header.d";
 import Social from "@/components/social/social";
 import Status from "@/components/status/status";
+import TextScramble from "@/components/textScramble/textScramble";
 
 async function getData() {
   try {
@@ -68,8 +69,10 @@ export default async function Header() {
 
   return (
     <header className="site-header flex flex-col items-start w-full gap-6">
-      {/* Avatar + Name */}
-      <div className="flex items-center gap-4">
+      <div
+        className="flex items-center gap-4 animate-fade-in-up"
+        style={{ animationDelay: "0.05s" }}
+      >
         <section className="avatar relative h-12 w-12 shrink-0 rounded-full">
           <Image
             src={headerContent.image.src}
@@ -90,22 +93,36 @@ export default async function Header() {
           <h1 className="font-bold text-[clamp(1.6rem,3vw,2.4rem)] text-poster-dark leading-none tracking-tight">
             {headerContent.title}
           </h1>
-          <span className="text-[0.65rem] text-poster-dark/30 uppercase tracking-[0.2em]">
-            {_domain}
-          </span>
+          <TextScramble
+            text={_domain}
+            delay={0.4}
+            duration={800}
+            className="text-[0.65rem] text-poster-dark/30 uppercase tracking-[0.2em]"
+          />
         </div>
       </div>
 
-      <p className="text-[clamp(0.85rem,1.1vw,1rem)] text-poster-dark/50 leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] text-pretty">
+      <p
+        className="text-[clamp(0.85rem,1.1vw,1rem)] text-poster-dark/50 leading-relaxed max-w-[420px] min-[1440px]:max-w-[560px] text-pretty animate-fade-in-up"
+        style={{ animationDelay: "0.2s" }}
+      >
         Father of two, software developer, fixed gear cyclist and music
         collector based in Brazil.
       </p>
 
-      {/* Social */}
-      <Social />
+      <div
+        className="animate-fade-in-up"
+        style={{ animationDelay: "0.35s" }}
+      >
+        <Social />
+      </div>
 
-      {/* Status */}
-      <Status dataFromAPI={headerContent.statusFromAPI} />
+      <div
+        className="animate-fade-in-up"
+        style={{ animationDelay: "0.5s" }}
+      >
+        <Status dataFromAPI={headerContent.statusFromAPI} />
+      </div>
     </header>
   );
 }
