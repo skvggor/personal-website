@@ -11,81 +11,63 @@ import {
 
 import Loading from "@/components/loading/loading";
 import type {
-  IStatus,
   IStatusComponentProps,
   IStatusData,
 } from "@/components/status/status.d";
+import { useTranslation } from "@/lib/i18n/context";
+import type { ReactNode } from "react";
 
 const ICON_WEIGHT = "bold" as const;
 const ICON_CLASS = "mr-1.5 h-[18px] w-[18px] min-[2560px]:h-[1.2vw] min-[2560px]:w-[1.2vw]";
 
-const statuses: Record<string, IStatus> = {
+interface StatusConfig {
+  color: string;
+  translationKey: string;
+  icon: ReactNode;
+}
+
+const statusConfigs: Record<string, StatusConfig> = {
   weekend: {
     color: "text-poster-dark",
-    text: "Enjoying the weekend.",
-    icon: (
-      <SmileyWink
-        className={ICON_CLASS}
-        weight={ICON_WEIGHT}
-      />
-    ),
+    translationKey: "status.weekend",
+    icon: <SmileyWink className={ICON_CLASS} weight={ICON_WEIGHT} />,
   },
   sleep: {
     color: "text-poster-mid",
-    text: "Sleeping.",
-    icon: (
-      <BatteryWarning
-        className={ICON_CLASS}
-        weight={ICON_WEIGHT}
-      />
-    ),
+    translationKey: "status.sleep",
+    icon: <BatteryWarning className={ICON_CLASS} weight={ICON_WEIGHT} />,
   },
   lunch: {
     color: "text-poster-dark",
-    text: "Having lunch.",
-    icon: (
-      <BatteryCharging
-        className={ICON_CLASS}
-        weight={ICON_WEIGHT}
-      />
-    ),
+    translationKey: "status.lunch",
+    icon: <BatteryCharging className={ICON_CLASS} weight={ICON_WEIGHT} />,
   },
   work: {
     color: "text-poster-dark",
-    text: "At work.",
-    icon: (
-      <Laptop
-        className={ICON_CLASS}
-        weight={ICON_WEIGHT}
-      />
-    ),
+    translationKey: "status.work",
+    icon: <Laptop className={ICON_CLASS} weight={ICON_WEIGHT} />,
   },
   free: {
     color: "text-poster-dark",
-    text: "Enjoying the life.",
-    icon: (
-      <SunHorizon
-        className={ICON_CLASS}
-        weight={ICON_WEIGHT}
-      />
-    ),
+    translationKey: "status.free",
+    icon: <SunHorizon className={ICON_CLASS} weight={ICON_WEIGHT} />,
   },
   listening: {
     color: "text-poster-dark",
-    text: "Listening to music.",
-    icon: (
-      <MusicNote
-        className={ICON_CLASS}
-        weight={ICON_WEIGHT}
-      />
-    ),
+    translationKey: "status.listening",
+    icon: <MusicNote className={ICON_CLASS} weight={ICON_WEIGHT} />,
   },
 };
 
 export default function Status({ dataFromAPI }: IStatusComponentProps) {
+  const { t } = useTranslation();
+  const config = statusConfigs[`${dataFromAPI?.status}`];
+
   const statusContent: IStatusData = {
     time: dataFromAPI?.time,
-    status: statuses[`${dataFromAPI?.status}`],
+    status: config
+      ? { color: config.color, text: t(config.translationKey), icon: config.icon }
+      : undefined,
   };
 
   return statusContent.status ? (

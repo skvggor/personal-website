@@ -3,10 +3,11 @@
 import { Disc, Waveform } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 interface ListeningCardProps {
   readonly coverArt: string;
-  readonly label: string;
+  readonly label: ReactNode;
   readonly trackName: string;
   readonly artist: string;
   readonly isPlaying: boolean;

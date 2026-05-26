@@ -1,4 +1,5 @@
 import ListeningCard from "@/components/listening/listeningCard";
+import ListeningLabel from "@/components/listening/listeningLabel";
 import Loading from "@/components/loading/loading";
 
 async function getData() {
@@ -50,15 +51,15 @@ export default async function Listening() {
     status: currentTrack?.["@attr"]?.nowplaying,
   };
 
-  const label = listeningContent.status ? "Listening now" : "Last played";
+  const isPlaying = !!listeningContent.status;
 
   return currentTrack ? (
     <ListeningCard
       coverArt={listeningContent.coverArt}
-      label={label}
+      label={<ListeningLabel isPlaying={isPlaying} />}
       trackName={listeningContent.track}
       artist={listeningContent.artist}
-      isPlaying={!!listeningContent.status}
+      isPlaying={isPlaying}
     />
   ) : (
     <Loading serviceName="last.fm" />

@@ -3,6 +3,7 @@ import { DM_Mono, Shippori_Mincho, VT323 } from "next/font/google";
 import Script from "next/script";
 import type { ReactNode } from "react";
 
+import { LanguageProvider } from "@/lib/i18n/context";
 import "./globals.css";
 
 const dmMono = DM_Mono({ subsets: ["latin"], weight: "300" });
@@ -20,7 +21,7 @@ const shipporiMincho = Shippori_Mincho({
 const siteUrl = "https://skvggor.dev";
 const title = "Marcos Lima — Software Developer";
 const description =
-  "Father of two, software developer, fixed gear cyclist and music collector based in Brazil.";
+  "Father of two, software developer, skateboarder, fixed gear cyclist and music collector based in Brazil.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     "React",
     "Next.js",
     "TypeScript",
+    "skateboarder",
     "fixed gear",
     "cyclist",
     "Brazil",
@@ -115,7 +117,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );
