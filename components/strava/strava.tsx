@@ -53,7 +53,7 @@ export default async function Strava({ type }: StravaProps) {
           suffix=" km"
         />
       </span>
-      <span className="text-poster-dark/60 text-[0.7rem] min-[2560px]:text-[0.55vw] uppercase tracking-widest">
+      <span className="text-poster-dark/60 text-[0.7rem] min-[2560px]:text-[0.55vw] tracking-widest">
         {stravaContent.currentYear}
       </span>
     </div>

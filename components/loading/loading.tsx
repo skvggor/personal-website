@@ -29,7 +29,7 @@ export default function Loading({ serviceName }: LoadingProps) {
             size={18}
             weight="bold"
           />
-          <span className="animate-pulse text-poster-dark/60 text-sm uppercase tracking-wide">
+          <span className="animate-pulse text-poster-dark/60 text-sm tracking-wide">
             {t("loading.loading")}
           </span>
         </>
@@ -40,7 +40,7 @@ export default function Loading({ serviceName }: LoadingProps) {
             size={18}
             weight="bold"
           />
-          <span className="text-poster-dark/60 text-sm uppercase tracking-wide">
+          <span className="text-poster-dark/60 text-sm tracking-wide">
             {t("loading.serviceUnavailable", { serviceName: serviceName ?? "" })}
           </span>
         </>

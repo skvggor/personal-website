@@ -109,7 +109,14 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body
         className={`${dmMono.className} ${vt323.variable} ${shipporiMincho.variable}`}
       >

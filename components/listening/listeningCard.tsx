@@ -70,7 +70,7 @@ export default function ListeningCard({
         <span className="font-bold text-poster-dark text-sm min-[2560px]:text-[0.7vw] leading-tight truncate">
           {trackName}
         </span>
-        <span className="text-poster-dark/70 text-[0.7rem] min-[2560px]:text-[0.55vw] uppercase tracking-widest truncate">
+        <span className="text-poster-dark/70 text-[0.7rem] min-[2560px]:text-[0.55vw] tracking-widest truncate">
           {artist}
         </span>
       </div>

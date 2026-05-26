@@ -85,7 +85,7 @@ export default function Social() {
             whileTap={{ scale: 0.95 }}
           >
             {iconMap[link.icon]}
-            <span className="text-[0.7rem] min-[2560px]:text-[0.55vw] font-bold uppercase tracking-widest hidden min-[480px]:inline">
+            <span className="text-[0.7rem] min-[2560px]:text-[0.55vw] font-bold tracking-widest hidden min-[480px]:inline">
               {link.title}
             </span>
           </motion.a>
