@@ -5,7 +5,7 @@ export default function OmakaseSeal() {
     <>
       {/* Desktop: vertical hero on the right */}
       <div
-        className="pointer-events-none fixed right-[6vw] min-[2560px]:right-[8vw] top-0 z-10 hidden h-screen items-center min-[1440px]:flex"
+        className="pointer-events-none fixed right-[6vw] min-[2560px]:right-[8vw] top-0 z-10 hidden h-screen items-center min-[1440px]:flex animate-breathe"
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-0">
@@ -32,12 +32,13 @@ export default function OmakaseSeal() {
         aria-hidden="true"
       >
         <span
-          className="block whitespace-nowrap text-poster-dark/6 animate-fade-in-scale"
+          className="block whitespace-nowrap text-poster-dark/6"
           style={{
             fontFamily: "var(--font-shippori)",
             fontSize: "clamp(6rem, 30vw, 12rem)",
             fontWeight: 700,
-            animationDelay: "0.6s",
+            animation:
+              "scale-in 1s ease-out 0.6s both, breathe 8s ease-in-out 1.6s infinite",
           }}
         >
           おまかせ

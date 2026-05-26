@@ -72,14 +72,14 @@ export default function AnnouncementBar({ config }: AnnouncementBarProps) {
             {isExternal ? (
               <a
                 {...linkProps}
-                className="flex items-center gap-2 text-[0.75rem] min-[2560px]:text-[0.8vw] text-poster-dark/50 leading-relaxed transition-colors hover:text-poster-dark"
+                className="flex items-center gap-2 text-[0.75rem] min-[2560px]:text-[0.55vw] text-poster-dark/80 leading-relaxed transition-colors hover:text-poster-dark"
               >
                 {linkContent}
               </a>
             ) : (
               <Link
                 {...linkProps}
-                className="flex items-center gap-2 text-[0.75rem] min-[2560px]:text-[0.8vw] text-poster-dark/50 leading-relaxed transition-colors hover:text-poster-dark"
+                className="flex items-center gap-2 text-[0.75rem] min-[2560px]:text-[0.55vw] text-poster-dark/80 leading-relaxed transition-colors hover:text-poster-dark"
               >
                 {linkContent}
               </Link>
