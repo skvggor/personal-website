@@ -5,7 +5,7 @@ export default function OmakaseSeal() {
     <>
       {/* Desktop: vertical hero on the right */}
       <div
-        className="pointer-events-none fixed right-[6vw] top-0 z-10 hidden h-screen items-center min-[1440px]:flex"
+        className="pointer-events-none fixed right-[6vw] min-[2560px]:right-[8vw] top-0 z-10 hidden h-screen items-center min-[1440px]:flex"
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-0">

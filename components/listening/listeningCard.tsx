@@ -20,10 +20,10 @@ export default function ListeningCard({
   isPlaying,
 }: ListeningCardProps) {
   return (
-    <div className="listening flex items-start gap-4 min-w-0 max-w-[300px] min-[1440px]:max-w-[400px]">
+    <div className="listening flex items-start gap-4 min-w-0 max-w-[300px] min-[1440px]:max-w-[400px] min-[2560px]:max-w-[20vw]">
       {/* Cover art — small, graphic */}
       <motion.div
-        className="relative h-[56px] w-[56px] shrink-0 rounded-lg overflow-hidden"
+        className="relative h-[56px] w-[56px] min-[2560px]:h-[3.5vw] min-[2560px]:w-[3.5vw] shrink-0 rounded-lg overflow-hidden"
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 400, damping: 15 }}
       >
@@ -55,7 +55,7 @@ export default function ListeningCard({
 
       {/* Track info — typographic */}
       <div className="flex flex-col gap-0.5 min-w-0">
-        <span className="flex items-center gap-1.5 text-poster-dark/40 text-[0.65rem] font-bold uppercase tracking-[0.15em]">
+        <span className="flex items-center gap-1.5 text-poster-dark/40 text-[0.65rem] min-[2560px]:text-[0.7vw] font-bold uppercase tracking-[0.15em]">
           {isPlaying ? (
             <Disc
               size={12}
@@ -66,10 +66,10 @@ export default function ListeningCard({
           ) : null}
           {label}
         </span>
-        <span className="font-bold text-poster-dark text-sm leading-tight truncate">
+        <span className="font-bold text-poster-dark text-sm min-[2560px]:text-[1vw] leading-tight truncate">
           {trackName}
         </span>
-        <span className="text-poster-dark/45 text-[0.7rem] uppercase tracking-widest truncate">
+        <span className="text-poster-dark/45 text-[0.7rem] min-[2560px]:text-[0.8vw] uppercase tracking-widest truncate">
           {artist}
         </span>
       </div>

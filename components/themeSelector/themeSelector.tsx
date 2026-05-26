@@ -19,9 +19,15 @@ const themes: Theme[] = [
 
 const STORAGE_KEY = "theme";
 
+const SIZES = {
+  default: { collapsed: "40px", padding: "12px", label: "60px" },
+  large: { collapsed: "48px", padding: "16px", label: "80px" },
+};
+
 export default function ThemeSelector() {
   const [active, setActive] = useState("terracotta");
   const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -29,6 +35,13 @@ export default function ThemeSelector() {
       setActive(stored);
       document.documentElement.setAttribute("data-theme", stored);
     }
+
+    const mediaQuery = window.matchMedia("(min-width: 2560px)");
+    setIsLargeScreen(mediaQuery.matches);
+    const handler = (event: MediaQueryListEvent) =>
+      setIsLargeScreen(event.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
   const handleSelect = useCallback((themeId: string) => {
@@ -46,9 +59,11 @@ export default function ThemeSelector() {
     setHoveredTheme(null);
   }, []);
 
+  const sizes = isLargeScreen ? SIZES.large : SIZES.default;
+
   return (
     <div
-      className="fixed right-2 top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-0 animate-fade-in-slide-right"
+      className="fixed right-2 min-[2560px]:right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-0 min-[2560px]:gap-1 animate-fade-in-slide-right"
       style={{ animationDelay: "1s" }}
     >
       {themes.map((theme) => {
@@ -62,10 +77,10 @@ export default function ThemeSelector() {
             onClick={() => handleSelect(theme.id)}
             onPointerEnter={() => handlePointerEnter(theme.id)}
             onPointerLeave={handlePointerLeave}
-            className="flex items-center justify-end h-10 gap-2 pr-3 rounded-full transition-all duration-300 ease-out focus:outline-none"
+            className="flex items-center justify-end h-10 min-[2560px]:h-12 gap-2 min-[2560px]:gap-3 pr-3 min-[2560px]:pr-4 rounded-full transition-all duration-300 ease-out focus:outline-none"
             style={{
-              width: isExpanded ? "auto" : "40px",
-              paddingLeft: isExpanded ? "12px" : "0",
+              width: isExpanded ? "auto" : sizes.collapsed,
+              paddingLeft: isExpanded ? sizes.padding : "0",
               backgroundColor: isExpanded
                 ? `color-mix(in srgb, ${theme.swatch} 20%, transparent)`
                 : "transparent",
@@ -73,10 +88,10 @@ export default function ThemeSelector() {
             aria-label={`Theme: ${theme.label}`}
           >
             <span
-              className="text-[0.65rem] font-bold tracking-wider whitespace-nowrap overflow-hidden transition-all duration-300 ease-out"
+              className="text-[0.65rem] min-[2560px]:text-sm font-bold tracking-wider whitespace-nowrap overflow-hidden transition-all duration-300 ease-out"
               style={{
                 fontFamily: "var(--font-shippori)",
-                maxWidth: isExpanded ? "60px" : "0",
+                maxWidth: isExpanded ? sizes.label : "0",
                 opacity: isExpanded ? 1 : 0,
                 color: theme.swatch,
               }}
@@ -84,7 +99,7 @@ export default function ThemeSelector() {
               {theme.label}
             </span>
             <span
-              className="block h-4 w-4 shrink-0 rounded-full transition-all duration-300"
+              className="block h-4 w-4 min-[2560px]:h-5 min-[2560px]:w-5 shrink-0 rounded-full transition-all duration-300"
               style={{
                 backgroundColor: theme.swatch,
                 boxShadow: isActive

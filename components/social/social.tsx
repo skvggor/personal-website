@@ -41,35 +41,38 @@ export default function Social() {
     ],
   };
 
+  const iconClass =
+    "h-[22px] w-[22px] min-[2560px]:h-[1.5vw] min-[2560px]:w-[1.5vw]";
+
   const iconMap: Record<string, React.ReactNode> = {
     youtube: (
       <YoutubeLogo
-        size={22}
         weight="bold"
+        className={iconClass}
       />
     ),
     github: (
       <GithubLogo
-        size={22}
         weight="bold"
+        className={iconClass}
       />
     ),
     linkedin: (
       <LinkedinLogo
-        size={22}
         weight="bold"
+        className={iconClass}
       />
     ),
     strava: (
       <Bicycle
-        size={22}
         weight="bold"
+        className={iconClass}
       />
     ),
   };
 
   return (
-    <section className="social flex items-center gap-6">
+    <section className="social flex items-center gap-6 min-[2560px]:gap-10">
       {socialContent.links.map((link, index) => (
         <MagneticHover key={link.id}>
           <motion.a
@@ -82,7 +85,7 @@ export default function Social() {
             whileTap={{ scale: 0.95 }}
           >
             {iconMap[link.icon]}
-            <span className="text-[0.7rem] font-bold uppercase tracking-widest hidden min-[480px]:inline">
+            <span className="text-[0.7rem] min-[2560px]:text-[0.8vw] font-bold uppercase tracking-widest hidden min-[480px]:inline">
               {link.title}
             </span>
           </motion.a>
