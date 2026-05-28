@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
-import Image from "next/image";
 
+import Avatar from "@/components/avatar/avatar";
 import type { IHeaderContent } from "@/components/header/header.d";
 import LanguageSelector from "@/components/languageSelector/languageSelector";
 import Location from "@/components/location/location";
@@ -46,12 +46,6 @@ export default async function Header() {
   const headerContent: IHeaderContent = {
     title: "Marcos Lima",
     currentPosition: [],
-    image: {
-      src: "/profile.jpg",
-      alt: "Marcos Lima",
-      width: 200,
-      height: 200,
-    },
     statusFromAPI: {
       time: data.time,
       status: data.status,
@@ -64,15 +58,7 @@ export default async function Header() {
         className="flex items-center gap-4 min-[2560px]:gap-4 animate-fade-in-up"
         style={{ animationDelay: "0.05s" }}
       >
-        <section className="avatar h-14 w-14 min-[2560px]:h-[2.8vw] min-[2560px]:w-[2.8vw] shrink-0 rounded-sm">
-          <Image
-            src={headerContent.image.src}
-            alt={headerContent.image.alt}
-            width={headerContent.image.width}
-            height={headerContent.image.height}
-            className="aspect-square border-2 border-poster-dark/20 h-full object-cover rounded-sm w-full grayscale transition-all duration-500 hover:grayscale-0 hover:border-poster-dark/40"
-          />
-        </section>
+        <Avatar />
 
         <div>
           <h1 className="font-bold text-[clamp(1.6rem,3vw,2.4rem)] min-[2560px]:text-[2.2vw] text-poster-dark leading-none tracking-tight">

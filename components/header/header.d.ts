@@ -1,7 +1,6 @@
 export interface IHeaderContent {
   title: string;
   currentPosition: (string | JSX.Element)[];
-  image: IImage;
   statusFromAPI: {
     time: string;
     status: string;
