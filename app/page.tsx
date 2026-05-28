@@ -1,10 +1,11 @@
 import AnnouncementBar from "@/components/announcementBar/announcementBar";
 import Header from "@/components/header/header";
-import PageTransition from "@/components/pageTransition/pageTransition";
 import Listening from "@/components/listening/listening";
 import Mastodon from "@/components/mastodon/mastodon";
 import OmakaseSeal from "@/components/omakaseSeal/omakaseSeal";
+import PageTransition from "@/components/pageTransition/pageTransition";
 import SashikoBackground from "@/components/sashikoBackground/sashikoBackground";
+import SeigaihaBand from "@/components/seigaihaBand/seigaihaBand";
 import Strava from "@/components/strava/strava";
 import ThemeSelector from "@/components/themeSelector/themeSelector";
 import { getAnnouncementBarConfig } from "@/lib/announcement";
@@ -17,6 +18,7 @@ export default async function Home() {
   return (
     <>
       <SashikoBackground />
+      <SeigaihaBand />
       <OmakaseSeal />
 
       <PageTransition>
