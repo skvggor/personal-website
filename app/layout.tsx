@@ -115,6 +115,7 @@ export default function RootLayout({
     >
       <head>
         <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static no-flash theme bootstrap, no user input
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
           }}
@@ -126,6 +127,7 @@ export default function RootLayout({
         <Script
           id="json-ld"
           type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data serialized from a static object
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <TransitionProvider>
