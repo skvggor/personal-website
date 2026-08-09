@@ -41,7 +41,9 @@ export default function Loading({ serviceName }: LoadingProps) {
             weight="bold"
           />
           <span className="text-poster-dark/60 text-sm tracking-wide">
-            {t("loading.serviceUnavailable", { serviceName: serviceName ?? "" })}
+            {t("loading.serviceUnavailable", {
+              serviceName: serviceName ?? "",
+            })}
           </span>
         </>
       )}

@@ -6,8 +6,7 @@ import { motion } from "motion/react";
 import MagneticHover from "@/components/magneticHover/magneticHover";
 import { useTranslation } from "@/lib/i18n/context";
 
-const MAP_URL =
-  "https://www.google.com/maps/place/Peruíbe,+SP,+Brazil";
+const MAP_URL = "https://www.google.com/maps/place/Peruíbe,+SP,+Brazil";
 
 export default function Location() {
   const { t } = useTranslation();

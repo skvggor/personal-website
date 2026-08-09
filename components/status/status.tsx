@@ -8,17 +8,17 @@ import {
   SmileyWink,
   SunHorizon,
 } from "@phosphor-icons/react";
-
+import type { ReactNode } from "react";
 import Loading from "@/components/loading/loading";
 import type {
   IStatusComponentProps,
   IStatusData,
 } from "@/components/status/status.d";
 import { useTranslation } from "@/lib/i18n/context";
-import type { ReactNode } from "react";
 
 const ICON_WEIGHT = "bold" as const;
-const ICON_CLASS = "mr-1.5 h-[18px] w-[18px] min-[2560px]:h-[0.85vw] min-[2560px]:w-[0.85vw]";
+const ICON_CLASS =
+  "mr-1.5 h-[18px] w-[18px] min-[2560px]:h-[0.85vw] min-[2560px]:w-[0.85vw]";
 
 interface StatusConfig {
   color: string;
@@ -30,32 +30,62 @@ const statusConfigs: Record<string, StatusConfig> = {
   weekend: {
     color: "text-poster-dark",
     translationKey: "status.weekend",
-    icon: <SmileyWink className={ICON_CLASS} weight={ICON_WEIGHT} />,
+    icon: (
+      <SmileyWink
+        className={ICON_CLASS}
+        weight={ICON_WEIGHT}
+      />
+    ),
   },
   sleep: {
     color: "text-poster-mid",
     translationKey: "status.sleep",
-    icon: <BatteryWarning className={ICON_CLASS} weight={ICON_WEIGHT} />,
+    icon: (
+      <BatteryWarning
+        className={ICON_CLASS}
+        weight={ICON_WEIGHT}
+      />
+    ),
   },
   lunch: {
     color: "text-poster-dark",
     translationKey: "status.lunch",
-    icon: <BatteryCharging className={ICON_CLASS} weight={ICON_WEIGHT} />,
+    icon: (
+      <BatteryCharging
+        className={ICON_CLASS}
+        weight={ICON_WEIGHT}
+      />
+    ),
   },
   work: {
     color: "text-poster-dark",
     translationKey: "status.work",
-    icon: <Laptop className={ICON_CLASS} weight={ICON_WEIGHT} />,
+    icon: (
+      <Laptop
+        className={ICON_CLASS}
+        weight={ICON_WEIGHT}
+      />
+    ),
   },
   free: {
     color: "text-poster-dark",
     translationKey: "status.free",
-    icon: <SunHorizon className={ICON_CLASS} weight={ICON_WEIGHT} />,
+    icon: (
+      <SunHorizon
+        className={ICON_CLASS}
+        weight={ICON_WEIGHT}
+      />
+    ),
   },
   listening: {
     color: "text-poster-dark",
     translationKey: "status.listening",
-    icon: <MusicNote className={ICON_CLASS} weight={ICON_WEIGHT} />,
+    icon: (
+      <MusicNote
+        className={ICON_CLASS}
+        weight={ICON_WEIGHT}
+      />
+    ),
   },
 };
 
@@ -66,7 +96,11 @@ export default function Status({ dataFromAPI }: IStatusComponentProps) {
   const statusContent: IStatusData = {
     time: dataFromAPI?.time,
     status: config
-      ? { color: config.color, text: t(config.translationKey), icon: config.icon }
+      ? {
+          color: config.color,
+          text: t(config.translationKey),
+          icon: config.icon,
+        }
       : undefined,
   };
 

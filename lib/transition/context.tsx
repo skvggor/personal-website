@@ -2,11 +2,11 @@
 
 import {
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useRef,
   useState,
-  type ReactNode,
 } from "react";
 
 type Phase = "idle" | "fadeOut" | "loader" | "fadeIn";

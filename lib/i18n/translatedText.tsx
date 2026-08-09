@@ -7,7 +7,10 @@ interface TranslatedTextProps {
   readonly replacements?: Record<string, string>;
 }
 
-export default function TranslatedText({ id, replacements }: TranslatedTextProps) {
+export default function TranslatedText({
+  id,
+  replacements,
+}: TranslatedTextProps) {
   const { t } = useTranslation();
   return <>{t(id, replacements)}</>;
 }

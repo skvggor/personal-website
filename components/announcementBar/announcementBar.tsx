@@ -4,8 +4,8 @@ import { ArrowRight, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import type { AnnouncementBarProps } from "./announcementBar.d";
 import { useTranslation } from "@/lib/i18n/context";
+import type { AnnouncementBarProps } from "./announcementBar.d";
 
 const STORAGE_KEY = "announcement-dismissed";
 

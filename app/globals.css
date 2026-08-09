@@ -122,18 +122,30 @@ body {
 }
 
 @keyframes slide-up {
-  from { transform: translateY(20px); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes slide-right {
-  from { transform: translateX(10px); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(10px);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes scale-in {
-  from { transform: scale(0.95); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .animate-fade-in-up {
@@ -149,9 +161,15 @@ body {
 }
 
 @keyframes breathe {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.06); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .animate-breathe {

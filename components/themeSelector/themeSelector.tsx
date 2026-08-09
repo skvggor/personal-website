@@ -78,51 +78,55 @@ export default function ThemeSelector() {
       className="fixed right-2 min-[2560px]:right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-0 min-[2560px]:gap-1 animate-fade-in-slide-right"
       style={{ animationDelay: "1s" }}
     >
-      {[...themes].sort((a, b) => (a.id === displayActive ? -1 : b.id === displayActive ? 1 : 0)).map((theme) => {
-        const isExpanded = hoveredTheme === theme.id;
-        const isActive = displayActive === theme.id;
+      {[...themes]
+        .sort((a, b) =>
+          a.id === displayActive ? -1 : b.id === displayActive ? 1 : 0,
+        )
+        .map((theme) => {
+          const isExpanded = hoveredTheme === theme.id;
+          const isActive = displayActive === theme.id;
 
-        return (
-          <button
-            key={theme.id}
-            type="button"
-            onClick={() => handleSelect(theme.id)}
-            onPointerEnter={() => handlePointerEnter(theme.id)}
-            onPointerLeave={handlePointerLeave}
-            className="cursor-pointer flex items-center justify-end h-10 min-[2560px]:h-12 gap-2 min-[2560px]:gap-3 pr-3 min-[2560px]:pr-4 rounded-full transition-all duration-300 ease-out focus:outline-none"
-            style={{
-              width: isExpanded ? "auto" : sizes.collapsed,
-              paddingLeft: isExpanded ? sizes.padding : "0",
-              backgroundColor: isExpanded
-                ? `color-mix(in srgb, ${theme.swatch} 20%, transparent)`
-                : "transparent",
-            }}
-            aria-label={`Theme: ${theme.label}`}
-          >
-            <span
-              className="text-[0.65rem] min-[2560px]:text-sm font-bold tracking-wider whitespace-nowrap overflow-hidden transition-all duration-300 ease-out"
+          return (
+            <button
+              key={theme.id}
+              type="button"
+              onClick={() => handleSelect(theme.id)}
+              onPointerEnter={() => handlePointerEnter(theme.id)}
+              onPointerLeave={handlePointerLeave}
+              className="cursor-pointer flex items-center justify-end h-10 min-[2560px]:h-12 gap-2 min-[2560px]:gap-3 pr-3 min-[2560px]:pr-4 rounded-full transition-all duration-300 ease-out focus:outline-none"
               style={{
-                fontFamily: "var(--font-shippori)",
-                maxWidth: isExpanded ? sizes.label : "0",
-                opacity: isExpanded ? 1 : 0,
-                color: theme.swatch,
+                width: isExpanded ? "auto" : sizes.collapsed,
+                paddingLeft: isExpanded ? sizes.padding : "0",
+                backgroundColor: isExpanded
+                  ? `color-mix(in srgb, ${theme.swatch} 20%, transparent)`
+                  : "transparent",
               }}
+              aria-label={`Theme: ${theme.label}`}
             >
-              {theme.label}
-            </span>
-            <span
-              className="block h-4 w-4 min-[2560px]:h-5 min-[2560px]:w-5 shrink-0 rounded-full transition-all duration-300"
-              style={{
-                backgroundColor: theme.swatch,
-                boxShadow: isActive
-                  ? `0 0 0 2px var(--poster-bg), 0 0 0 3.5px ${theme.swatch}`
-                  : "0 1px 3px rgba(0,0,0,0.15)",
-                transform: isExpanded ? "scale(1.2)" : "scale(1)",
-              }}
-            />
-          </button>
-        );
-      })}
+              <span
+                className="text-[0.65rem] min-[2560px]:text-sm font-bold tracking-wider whitespace-nowrap overflow-hidden transition-all duration-300 ease-out"
+                style={{
+                  fontFamily: "var(--font-shippori)",
+                  maxWidth: isExpanded ? sizes.label : "0",
+                  opacity: isExpanded ? 1 : 0,
+                  color: theme.swatch,
+                }}
+              >
+                {theme.label}
+              </span>
+              <span
+                className="block h-4 w-4 min-[2560px]:h-5 min-[2560px]:w-5 shrink-0 rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor: theme.swatch,
+                  boxShadow: isActive
+                    ? `0 0 0 2px var(--poster-bg), 0 0 0 3.5px ${theme.swatch}`
+                    : "0 1px 3px rgba(0,0,0,0.15)",
+                  transform: isExpanded ? "scale(1.2)" : "scale(1)",
+                }}
+              />
+            </button>
+          );
+        })}
     </div>
   );
 }
