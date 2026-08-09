@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   capDevicePixelRatio,
   selectStride,
-  stepMagnet,
+  stepRamp,
 } from "@/lib/particles/runtime";
 
 describe("capDevicePixelRatio", () => {
@@ -36,18 +36,18 @@ describe("selectStride", () => {
   });
 });
 
-describe("stepMagnet", () => {
+describe("stepRamp", () => {
   it("ramps up towards the target without overshooting", () => {
-    expect(stepMagnet(0, 1, 0.25)).toBe(0.25);
-    expect(stepMagnet(0.9, 1, 0.5)).toBe(1);
+    expect(stepRamp(0, 1, 0.25)).toBe(0.25);
+    expect(stepRamp(0.9, 1, 0.5)).toBe(1);
   });
 
   it("ramps down towards the target without undershooting", () => {
-    expect(stepMagnet(1, 0, 0.25)).toBe(0.75);
-    expect(stepMagnet(0.2, 0, 0.5)).toBe(0);
+    expect(stepRamp(1, 0, 0.25)).toBe(0.75);
+    expect(stepRamp(0.2, 0, 0.5)).toBe(0);
   });
 
   it("stays put when already at the target", () => {
-    expect(stepMagnet(0.5, 0.5, 0.25)).toBe(0.5);
+    expect(stepRamp(0.5, 0.5, 0.25)).toBe(0.5);
   });
 });

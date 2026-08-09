@@ -78,19 +78,35 @@ describe("loadStageData", () => {
     const load = vi.fn(() => Promise.resolve());
     installFonts(load);
 
-    const data = await loadStageData("/me.avif", 2, 60, 2, "--font-shippori");
+    const data = await loadStageData(
+      "/me.avif",
+      "/me2.avif",
+      2,
+      60,
+      2,
+      "--font-shippori",
+    );
 
     expect(load).toHaveBeenCalled();
     expect(data.stages.length).toBe(4);
     expect(data.count).toBeGreaterThan(0);
     expect(data.seeds.length).toBe(data.count);
+    expect(data.hover.positions.length).toBe(data.count * 2);
+    expect(data.hover.colors.length).toBe(data.count * 3);
   });
 
   it("tolerates a failing font load", async () => {
     const load = vi.fn(() => Promise.reject(new Error("offline")));
     installFonts(load);
 
-    const data = await loadStageData("/me.avif", 2, 60, 0, "--font-shippori");
+    const data = await loadStageData(
+      "/me.avif",
+      "/me2.avif",
+      2,
+      60,
+      0,
+      "--font-shippori",
+    );
     expect(data.stages.length).toBe(2);
   });
 
@@ -98,7 +114,7 @@ describe("loadStageData", () => {
     HTMLCanvasElement.prototype.getContext = vi.fn(() => null);
 
     await expect(
-      loadStageData("/me.avif", 2, 60, 0, "--font-shippori"),
+      loadStageData("/me.avif", "/me2.avif", 2, 60, 0, "--font-shippori"),
     ).rejects.toThrow(/Failed to acquire 2D context/);
   });
 });

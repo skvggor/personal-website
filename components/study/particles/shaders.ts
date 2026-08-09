@@ -4,32 +4,25 @@ export const vertexShaderSource = /* glsl */ `
   attribute vec3 aColorFrom;
   attribute vec3 aColorTo;
   attribute float aSeed;
+  attribute vec2 aHoverPosition;
+  attribute vec3 aHoverColor;
 
   uniform float uProgress;
   uniform float uTime;
   uniform float uFloatingAmplitude;
   uniform float uPointSize;
-  uniform vec2 uMouse;
-  uniform float uMagnet;
+  uniform float uHover;
   uniform float uPhotoWeight;
-  uniform vec3 uMagnetColor;
 
   varying vec3 vColor;
 
   void main() {
-    vec2 position = mix(aPositionFrom, aPositionTo, uProgress);
+    vec2 basePosition = mix(aPositionFrom, aPositionTo, uProgress);
+    vec2 position = mix(basePosition, aHoverPosition, uHover);
     position.x += sin(uTime * 1.5 + aSeed * 6.2832) * uFloatingAmplitude;
     position.y += cos(uTime * 1.2 + aSeed * 12.5664) * uFloatingAmplitude;
 
-    float diskAngle = fract(aSeed * 127.1 + 0.31) * 6.2831853;
-    float diskRadius = sqrt(fract(aSeed * 269.5 + 0.71));
-    vec2 diskPosition = uMouse + vec2(cos(diskAngle), sin(diskAngle)) * diskRadius;
-
-    float mass = 0.35 + 0.65 * aSeed;
-    float arrival = clamp(uMagnet / mass, 0.0, 1.0);
-    position = mix(position, diskPosition, arrival);
-
-    float excursionActive = uPhotoWeight * (1.0 - uMagnet);
+    float excursionActive = uPhotoWeight;
     float eligible = step(aSeed, 0.012);
     float excursionPhase = fract(uTime / 11.0 + aSeed * 80.0);
     float excursionBell = smoothstep(0.40, 0.5, excursionPhase)
@@ -39,9 +32,9 @@ export const vertexShaderSource = /* glsl */ `
 
     gl_Position = vec4(position, 0.0, 1.0);
     gl_PointSize = uPointSize
-      * (1.0 + arrival * 1.5 + excursionBell * 2.0 * eligible * excursionActive);
-    vec3 photoColor = mix(aColorFrom, aColorTo, uProgress);
-    vColor = mix(photoColor, uMagnetColor, arrival);
+      * (1.0 + excursionBell * 2.0 * eligible * excursionActive);
+    vec3 baseColor = mix(aColorFrom, aColorTo, uProgress);
+    vColor = mix(baseColor, aHoverColor, uHover);
   }
 `;
 

@@ -7,7 +7,11 @@ import {
   DEFAULT_CONCRETE_OPTIONS,
 } from "@/lib/particles/concrete";
 import { extractParticles } from "@/lib/particles/extract";
-import { createRandom, resampleStage } from "@/lib/particles/origins";
+import {
+  createRandom,
+  resampleStage,
+  uniformResampleStage,
+} from "@/lib/particles/origins";
 
 const MAXIMUM_WORKING_DIMENSION = 512;
 const DIGIT_RENDER_SIZE = 256;
@@ -23,6 +27,7 @@ export interface StageData {
   readonly seeds: Float32Array;
   readonly count: number;
   readonly workingSize: number;
+  readonly hover: ParticleStage;
 }
 
 function createOffscreenContext(
@@ -176,6 +181,7 @@ async function extractConcreteStage(
 
 export async function loadStageData(
   imageSource: string,
+  hoverImageSource: string,
   stride: number,
   brightnessThreshold: number,
   countdownFrom: number,
@@ -214,10 +220,22 @@ export async function loadStageData(
     seeds[index] = random();
   }
 
+  const hoverPhoto = await loadImagePixels(
+    hoverImageSource,
+    stride,
+    brightnessThreshold,
+  );
+  const hover = uniformResampleStage(
+    hoverPhoto.positions,
+    hoverPhoto.colors,
+    count,
+  );
+
   return {
     stages,
     seeds,
     count,
     workingSize: photo.workingWidth,
+    hover,
   };
 }

@@ -23,6 +23,7 @@ export default function ParticleStudyPage() {
         width={500}
         height={500}
         imageSource="/me.avif"
+        hoverImageSource="/me2.avif"
         countdownFrom={5}
         morphDurationMilliseconds={600}
         stageHoldMilliseconds={400}

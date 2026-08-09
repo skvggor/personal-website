@@ -9,7 +9,7 @@ export function selectStride(isCoarsePointer: boolean): number {
   return isCoarsePointer ? 4 : 2;
 }
 
-export function stepMagnet(
+export function stepRamp(
   current: number,
   target: number,
   rampStep: number,

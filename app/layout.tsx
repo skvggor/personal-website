@@ -92,7 +92,7 @@ const jsonLd = {
   name: "Marcos Lima",
   alternateName: "skvggor",
   url: siteUrl,
-  image: `${siteUrl}/profile.jpg`,
+  image: `${siteUrl}/og-image.png`,
   jobTitle: "Software Developer",
   description,
   sameAs: [

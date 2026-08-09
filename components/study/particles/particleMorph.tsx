@@ -10,6 +10,7 @@ export interface ParticleMorphProps {
   readonly width: number;
   readonly height: number;
   readonly imageSource: string;
+  readonly hoverImageSource?: string;
   readonly countdownFrom?: number;
   readonly morphDurationMilliseconds?: number;
   readonly stageHoldMilliseconds?: number;
@@ -20,8 +21,7 @@ export interface ParticleMorphProps {
   readonly stride?: number;
   readonly digitFontVariable?: string;
   readonly circular?: boolean;
-  readonly magnetRampMilliseconds?: number;
-  readonly magnetColor?: string;
+  readonly hoverMorphMilliseconds?: number;
 }
 
 const DEFAULT_POINT_FILL_RATIO = 1.0;
@@ -31,6 +31,7 @@ export default function ParticleMorph({
   width,
   height,
   imageSource,
+  hoverImageSource = imageSource,
   countdownFrom = 5,
   morphDurationMilliseconds = 600,
   stageHoldMilliseconds = 400,
@@ -41,13 +42,13 @@ export default function ParticleMorph({
   stride: strideOverride,
   digitFontVariable = DEFAULT_DIGIT_FONT_VARIABLE,
   circular = false,
-  magnetRampMilliseconds = 700,
-  magnetColor = "#b48e08",
+  hoverMorphMilliseconds = 700,
 }: ParticleMorphProps) {
   const configuration: ParticleMorphConfiguration = {
     width,
     height,
     imageSource,
+    hoverImageSource,
     countdownFrom,
     morphDurationMilliseconds,
     stageHoldMilliseconds,
@@ -57,8 +58,7 @@ export default function ParticleMorph({
     backgroundColor,
     strideOverride,
     digitFontVariable,
-    magnetRampMilliseconds,
-    magnetColor,
+    hoverMorphMilliseconds,
   };
 
   const { canvasReference, renderFallback } =

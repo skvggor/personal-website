@@ -11,7 +11,7 @@ import { easeInOutCubic } from "@/lib/particles/easing";
 import {
   capDevicePixelRatio,
   selectStride,
-  stepMagnet,
+  stepRamp,
 } from "@/lib/particles/runtime";
 import { computeStageState } from "@/lib/particles/timeline";
 
@@ -19,6 +19,7 @@ export interface ParticleMorphConfiguration {
   readonly width: number;
   readonly height: number;
   readonly imageSource: string;
+  readonly hoverImageSource: string;
   readonly countdownFrom: number;
   readonly morphDurationMilliseconds: number;
   readonly stageHoldMilliseconds: number;
@@ -28,8 +29,7 @@ export interface ParticleMorphConfiguration {
   readonly backgroundColor: string | undefined;
   readonly strideOverride: number | undefined;
   readonly digitFontVariable: string;
-  readonly magnetRampMilliseconds: number;
-  readonly magnetColor: string;
+  readonly hoverMorphMilliseconds: number;
 }
 
 export interface ParticleMorphCanvas {
@@ -50,6 +50,7 @@ export function useParticleMorphCanvas(
     width,
     height,
     imageSource,
+    hoverImageSource,
     countdownFrom,
     morphDurationMilliseconds,
     stageHoldMilliseconds,
@@ -59,13 +60,12 @@ export function useParticleMorphCanvas(
     backgroundColor,
     strideOverride,
     digitFontVariable,
-    magnetRampMilliseconds,
-    magnetColor,
+    hoverMorphMilliseconds,
   } = configuration;
 
   const canvasReference = useRef<HTMLCanvasElement>(null);
   const animationFrameReference = useRef<number>(0);
-  const mouseReference = useRef({ x: 0, y: 0, active: false });
+  const hoverReference = useRef(false);
   const [renderFallback, setRenderFallback] = useState(false);
 
   useEffect(() => {
@@ -99,18 +99,11 @@ export function useParticleMorphCanvas(
     resizeListener = () => configureDrawingBuffer();
     window.addEventListener("resize", resizeListener);
 
-    mouseMoveListener = (event: MouseEvent) => {
-      const rectangle = canvas.getBoundingClientRect();
-      mouseReference.current.x =
-        ((event.clientX - rectangle.left) / rectangle.width) * 2 - 1;
-      mouseReference.current.y = -(
-        ((event.clientY - rectangle.top) / rectangle.height) * 2 -
-        1
-      );
-      mouseReference.current.active = true;
+    mouseMoveListener = () => {
+      hoverReference.current = true;
     };
     mouseLeaveListener = () => {
-      mouseReference.current.active = false;
+      hoverReference.current = false;
     };
     canvas.addEventListener("mousemove", mouseMoveListener);
     canvas.addEventListener("mouseleave", mouseLeaveListener);
@@ -120,6 +113,7 @@ export function useParticleMorphCanvas(
 
     loadStageData(
       imageSource,
+      hoverImageSource,
       stride,
       brightnessThreshold,
       countdownFrom,
@@ -129,7 +123,7 @@ export function useParticleMorphCanvas(
         if (cancelled || stageData.count === 0) {
           return;
         }
-        const { stages, seeds, count, workingSize } = stageData;
+        const { stages, seeds, count, workingSize, hover } = stageData;
         program = createProgram(renderingContext);
         // biome-ignore lint/correctness/useHookAtTopLevel: WebGL useProgram method, not a React hook
         renderingContext.useProgram(program);
@@ -142,7 +136,12 @@ export function useParticleMorphCanvas(
         );
         createdBuffers.push(...stagePositionBuffers, ...stageColorBuffers);
         const seedBuffer = uploadBuffer(renderingContext, seeds);
-        createdBuffers.push(seedBuffer);
+        const hoverPositionBuffer = uploadBuffer(
+          renderingContext,
+          hover.positions,
+        );
+        const hoverColorBuffer = uploadBuffer(renderingContext, hover.colors);
+        createdBuffers.push(seedBuffer, hoverPositionBuffer, hoverColorBuffer);
 
         const positionFromLocation = renderingContext.getAttribLocation(
           program,
@@ -164,7 +163,27 @@ export function useParticleMorphCanvas(
           program,
           "aSeed",
         );
+        const hoverPositionLocation = renderingContext.getAttribLocation(
+          program,
+          "aHoverPosition",
+        );
+        const hoverColorLocation = renderingContext.getAttribLocation(
+          program,
+          "aHoverColor",
+        );
         bindAttribute(renderingContext, seedBuffer, seedLocation, 1);
+        bindAttribute(
+          renderingContext,
+          hoverPositionBuffer,
+          hoverPositionLocation,
+          2,
+        );
+        bindAttribute(
+          renderingContext,
+          hoverColorBuffer,
+          hoverColorLocation,
+          3,
+        );
 
         renderingContext.enable(renderingContext.BLEND);
         renderingContext.blendFunc(
@@ -199,33 +218,18 @@ export function useParticleMorphCanvas(
           program,
           "uFillRatio",
         );
-        const mouseLocation = renderingContext.getUniformLocation(
+        const hoverLocation = renderingContext.getUniformLocation(
           program,
-          "uMouse",
-        );
-        const magnetLocation = renderingContext.getUniformLocation(
-          program,
-          "uMagnet",
+          "uHover",
         );
         const photoWeightLocation = renderingContext.getUniformLocation(
           program,
           "uPhotoWeight",
         );
-        const magnetColorLocation = renderingContext.getUniformLocation(
-          program,
-          "uMagnetColor",
-        );
         renderingContext.uniform1f(fillRatioLocation, pointFillRatio);
-        const magnet = resolveColor(magnetColor, BLACK);
-        renderingContext.uniform3f(
-          magnetColorLocation,
-          magnet.red,
-          magnet.green,
-          magnet.blue,
-        );
 
         let activeFromIndex = -1;
-        let magnetStrength = 0;
+        let hoverProgress = 0;
         let previousFrameTime = 0;
 
         const render = (now: number) => {
@@ -286,20 +290,16 @@ export function useParticleMorphCanvas(
             pointSizeLocation,
             stride * (canvas.width / workingSize) * pointFillRatio,
           );
-          const targetMagnet = mouseReference.current.active
-            ? state.floatingFactor
-            : 0;
-          magnetStrength = stepMagnet(
-            magnetStrength,
-            targetMagnet,
-            deltaTime / magnetRampMilliseconds,
+          const targetHover = hoverReference.current ? state.floatingFactor : 0;
+          hoverProgress = stepRamp(
+            hoverProgress,
+            targetHover,
+            deltaTime / hoverMorphMilliseconds,
           );
-          renderingContext.uniform2f(
-            mouseLocation,
-            mouseReference.current.x,
-            mouseReference.current.y,
+          renderingContext.uniform1f(
+            hoverLocation,
+            easeInOutCubic(hoverProgress),
           );
-          renderingContext.uniform1f(magnetLocation, magnetStrength);
           renderingContext.drawArrays(renderingContext.POINTS, 0, count);
           animationFrameReference.current = requestAnimationFrame(render);
         };
@@ -336,6 +336,7 @@ export function useParticleMorphCanvas(
     width,
     height,
     imageSource,
+    hoverImageSource,
     countdownFrom,
     morphDurationMilliseconds,
     stageHoldMilliseconds,
@@ -345,8 +346,7 @@ export function useParticleMorphCanvas(
     backgroundColor,
     strideOverride,
     digitFontVariable,
-    magnetRampMilliseconds,
-    magnetColor,
+    hoverMorphMilliseconds,
   ]);
 
   return { canvasReference, renderFallback };
