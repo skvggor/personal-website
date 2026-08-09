@@ -2,11 +2,11 @@
 
 import {
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
   useState,
-  type ReactNode,
 } from "react";
 
 import en from "@/lib/i18n/messages/en.json";
@@ -44,7 +44,11 @@ function getNestedValue(object: Record<string, unknown>, path: string): string {
   return typeof result === "string" ? result : path;
 }
 
-export function LanguageProvider({ children }: { readonly children: ReactNode }) {
+export function LanguageProvider({
+  children,
+}: {
+  readonly children: ReactNode;
+}) {
   const [locale, setLocaleState] = useState<Locale>("en");
 
   useEffect(() => {
