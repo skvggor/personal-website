@@ -9,10 +9,11 @@ Personal website with a Japanese constructivist poster aesthetic — おまか�
 - Next.js 16 with App Router
 - React 19
 - Tailwind CSS 4
-- TypeScript 6
+- TypeScript 7
 - Motion (Framer Motion)
 - Phosphor Icons
 - Biome (linting/formatting)
+- Vitest 4 (unit and component tests with jsdom and coverage)
 
 ## Features
 
@@ -27,8 +28,9 @@ Personal website with a Japanese constructivist poster aesthetic — おまか�
 
 ### Prerequisites
 
-- Node.js 24+
-- npm or yarn
+- Node.js 26+
+- npm (the project ships a `package-lock.json`)
+- [mise](https://mise.jdx.dev/) recommended for version management — the pinned Node version lives in `.mise.toml`
 
 ### Setup
 
@@ -119,4 +121,8 @@ docker compose up -d
 - `build` — Production build with type checking
 - `start` — Production server
 - `type-check` — TypeScript checking
-- `lint` — Linting with Biome
+- `lint` — Linting and formatting with Biome
+- `test` — Run the test suite once
+- `test:watch` — Run tests in watch mode
+- `test:coverage` — Run tests with coverage (80% thresholds)
+- `update-screenshot` — Rebuild the OG/screenshot via Docker
