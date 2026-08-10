@@ -45,10 +45,13 @@ function installTwoDimensionalContext(): void {
   })) as unknown as typeof originalGetContext;
 }
 
-function installFonts(load: () => Promise<unknown>): void {
+function installFonts(
+  load: () => Promise<unknown>,
+  ready: Promise<unknown> = Promise.resolve(),
+): void {
   Object.defineProperty(document, "fonts", {
     configurable: true,
-    value: { ready: Promise.resolve(), load },
+    value: { ready, load },
   });
 }
 
@@ -98,6 +101,21 @@ describe("loadStageData", () => {
   it("tolerates a failing font load", async () => {
     const load = vi.fn(() => Promise.reject(new Error("offline")));
     installFonts(load);
+
+    const data = await loadStageData(
+      "/me.avif",
+      "/me2.avif",
+      2,
+      60,
+      0,
+      "--font-shippori",
+    );
+    expect(data.stages.length).toBe(2);
+  });
+
+  it("proceeds when the font never settles instead of hanging", async () => {
+    const neverSettles = () => new Promise<unknown>(() => undefined);
+    installFonts(neverSettles, new Promise(() => undefined));
 
     const data = await loadStageData(
       "/me.avif",
