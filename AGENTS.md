@@ -33,7 +33,6 @@ This is the personal website of Marcos Lima (skvggor) — a single-page Next.js 
 
 ```
 app/          App Router. Root layout, page, globals.css, robots.ts, sitemap.ts.
-              Routes under app/study/ are noindex experiments.
 components/   React components, grouped one folder per feature.
 lib/          Framework-agnostic utilities: i18n, transitions, particles.
 content/      Markdown content (e.g. announcement-bar.md).
@@ -49,12 +48,12 @@ There are two coexisting styles — match the neighbours of the file you edit:
 - **Legacy feature components** ship as a pair: `feature/feature.tsx` (implementation) + `feature/feature.d.ts` (props/content interfaces).
 - **Newer components** keep types co-located in the single `.tsx`/`.ts` file. Prefer this for new work.
 
-### `lib/particles` vs `components/study/particles`
+### `lib/particles` vs `components/particles`
 
 The particle-morphing subsystem is split by responsibility:
 
 - `lib/particles/*.ts` — pure, framework-agnostic math (extraction, easing, noise, concrete relief, timeline, aspect correction, runtime helpers). No DOM, fully unit-tested.
-- `components/study/particles/` — the DOM/WebGL glue: `pipeline.ts` (image + font loading), `webgl.ts` (shader/buffer/attribute helpers), `useParticleMorphCanvas.ts` (the render-loop hook), `particleMorph.tsx` (thin presentational component), `shaders.ts` (GLSL).
+- `components/particles/` — the DOM/WebGL glue: `pipeline.ts` (image + font loading), `webgl.ts` (shader/buffer/attribute helpers), `useParticleMorphCanvas.ts` (the render-loop hook), `particleMorph.tsx` (thin presentational component), `shaders.ts` (GLSL).
 
 Keep that boundary: pure logic belongs in `lib/particles`, side effects in the component layer.
 
@@ -70,7 +69,7 @@ Keep that boundary: pure logic belongs in `lib/particles`, side effects in the c
 
 ## Testing
 
-- `lib/particles/**/*.ts` and `components/study/**/*.{ts,tsx}` are measured for coverage.
+- `lib/particles/**/*.ts` and `components/particles/**/*.{ts,tsx}` are measured for coverage.
 - Global thresholds: **80%** statements / branches / functions / lines. Aim for ≥80% on every changed file.
 - Component/DOM tests must start with `// @vitest-environment jsdom`.
 - Never use `any` in tests — use real types or `Partial`/`Pick` utilities for mocks.

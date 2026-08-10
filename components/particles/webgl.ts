@@ -1,7 +1,7 @@
 import {
   fragmentShaderSource,
   vertexShaderSource,
-} from "@/components/study/particles/shaders";
+} from "@/components/particles/shaders";
 
 export function compileShader(
   renderingContext: WebGLRenderingContext,

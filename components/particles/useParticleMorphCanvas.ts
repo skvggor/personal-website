@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import type { StageData } from "@/components/study/particles/pipeline";
-import { loadStageData } from "@/components/study/particles/pipeline";
+import type { StageData } from "@/components/particles/pipeline";
+import { loadStageData } from "@/components/particles/pipeline";
 import {
   bindAttribute,
   createProgram,
   uploadBuffer,
-} from "@/components/study/particles/webgl";
+} from "@/components/particles/webgl";
 import { resolveColor } from "@/lib/particles/color";
 import { easeInOutCubic } from "@/lib/particles/easing";
 import {
@@ -30,6 +30,7 @@ export interface ParticleMorphConfiguration {
   readonly strideOverride: number | undefined;
   readonly digitFontVariable: string;
   readonly hoverMorphMilliseconds: number;
+  readonly onInitialAnimationComplete?: () => void;
 }
 
 export interface ParticleMorphCanvas {
@@ -61,12 +62,21 @@ export function useParticleMorphCanvas(
     strideOverride,
     digitFontVariable,
     hoverMorphMilliseconds,
+    onInitialAnimationComplete,
   } = configuration;
 
   const canvasReference = useRef<HTMLCanvasElement>(null);
   const animationFrameReference = useRef<number>(0);
   const hoverReference = useRef(false);
+  const initialAnimationCompleteReference = useRef(false);
+  const onInitialAnimationCompleteReference = useRef(
+    onInitialAnimationComplete,
+  );
   const [renderFallback, setRenderFallback] = useState(false);
+
+  useEffect(() => {
+    onInitialAnimationCompleteReference.current = onInitialAnimationComplete;
+  }, [onInitialAnimationComplete]);
 
   useEffect(() => {
     const canvas = canvasReference.current;
@@ -74,9 +84,18 @@ export function useParticleMorphCanvas(
       return;
     }
 
+    const completeInitialAnimation = () => {
+      if (initialAnimationCompleteReference.current) {
+        return;
+      }
+      initialAnimationCompleteReference.current = true;
+      onInitialAnimationCompleteReference.current?.();
+    };
+
     const renderingContext = canvas.getContext("webgl");
     if (!renderingContext) {
       setRenderFallback(true);
+      completeInitialAnimation();
       return;
     }
 
@@ -128,7 +147,11 @@ export function useParticleMorphCanvas(
       digitFontVariable,
     )
       .then((stageData: StageData) => {
-        if (cancelled || stageData.count === 0) {
+        if (cancelled) {
+          return;
+        }
+        if (stageData.count === 0) {
+          completeInitialAnimation();
           return;
         }
         const { stages, seeds, count, workingSize, hover } = stageData;
@@ -283,6 +306,10 @@ export function useParticleMorphCanvas(
             activeFromIndex = state.fromIndex;
           }
 
+          if (state.settled) {
+            completeInitialAnimation();
+          }
+
           renderingContext.clear(renderingContext.COLOR_BUFFER_BIT);
           renderingContext.uniform1f(
             progressLocation,
@@ -317,6 +344,7 @@ export function useParticleMorphCanvas(
       .catch((error: unknown) => {
         console.error("[particleMorph] stage loading failed:", error);
         if (!cancelled) {
+          completeInitialAnimation();
           setRenderFallback(true);
         }
       });

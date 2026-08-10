@@ -4,7 +4,7 @@ import NextImage from "next/image";
 import {
   type ParticleMorphConfiguration,
   useParticleMorphCanvas,
-} from "@/components/study/particles/useParticleMorphCanvas";
+} from "@/components/particles/useParticleMorphCanvas";
 
 export interface ParticleMorphProps {
   readonly width: number;
@@ -22,6 +22,7 @@ export interface ParticleMorphProps {
   readonly digitFontVariable?: string;
   readonly circular?: boolean;
   readonly hoverMorphMilliseconds?: number;
+  readonly onInitialAnimationComplete?: () => void;
 }
 
 const DEFAULT_POINT_FILL_RATIO = 1.0;
@@ -43,6 +44,7 @@ export default function ParticleMorph({
   digitFontVariable = DEFAULT_DIGIT_FONT_VARIABLE,
   circular = false,
   hoverMorphMilliseconds = 700,
+  onInitialAnimationComplete,
 }: ParticleMorphProps) {
   const configuration: ParticleMorphConfiguration = {
     width,
@@ -59,6 +61,7 @@ export default function ParticleMorph({
     strideOverride,
     digitFontVariable,
     hoverMorphMilliseconds,
+    onInitialAnimationComplete,
   };
 
   const { canvasReference, renderFallback } =
