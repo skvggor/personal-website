@@ -1,11 +1,18 @@
+"use client";
+
+import { useState } from "react";
 import EntranceLink from "@/components/study/particles/entranceLink";
 import ParticleMorph from "@/components/study/particles/particleMorph";
 
+const POSTER_BACKGROUND = "#301b02";
+
 export default function Home() {
+  const [entranceVisible, setEntranceVisible] = useState(false);
+
   return (
     <main
       className="flex min-h-dvh flex-col items-center justify-center gap-10"
-      style={{ backgroundColor: "#301b02" }}
+      style={{ backgroundColor: POSTER_BACKGROUND }}
     >
       <ParticleMorph
         width={500}
@@ -18,11 +25,12 @@ export default function Home() {
         brightnessThreshold={36}
         pointFillRatio={1.0}
         floatingAmplitude={0.004}
-        backgroundColor="#301b02"
+        backgroundColor={POSTER_BACKGROUND}
         stride={2}
         circular
+        onInitialAnimationComplete={() => setEntranceVisible(true)}
       />
-      <EntranceLink />
+      <EntranceLink visible={entranceVisible} />
     </main>
   );
 }

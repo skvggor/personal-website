@@ -238,10 +238,58 @@ describe("ParticleMorph", () => {
     }
     globalThis.Image = BrokenImage as unknown as typeof Image;
 
-    const { container, findByRole } = render(<ParticleMorph {...baseProps} />);
+    const onComplete = vi.fn();
+    const { container, findByRole } = render(
+      <ParticleMorph
+        {...baseProps}
+        onInitialAnimationComplete={onComplete}
+      />,
+    );
     const fallback = await findByRole("img");
     expect(fallback.getAttribute("alt")).toBe("Particle morphing fallback");
     expect(container.querySelector("canvas")).toBeNull();
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it("reports the initial animation completion once the timeline settles", async () => {
+    const onComplete = vi.fn();
+    mountWithWebGl({
+      morphDurationMilliseconds: 0,
+      stageHoldMilliseconds: 0,
+      onInitialAnimationComplete: onComplete,
+    });
+
+    await vi.waitFor(
+      () => {
+        expect(onComplete).toHaveBeenCalledTimes(1);
+      },
+      { timeout: 3000, interval: 20 },
+    );
+  });
+
+  it("reports the initial animation completion when WebGL is unavailable", () => {
+    HTMLCanvasElement.prototype.getContext = vi.fn(() => null);
+    installMatchMediaMock();
+    const onComplete = vi.fn();
+    render(
+      <ParticleMorph
+        {...baseProps}
+        onInitialAnimationComplete={onComplete}
+      />,
+    );
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it("reports the initial animation completion when no particles survive", async () => {
+    const onComplete = vi.fn();
+    mountWithWebGl({ onInitialAnimationComplete: onComplete }, 0);
+
+    await vi.waitFor(
+      () => {
+        expect(onComplete).toHaveBeenCalledTimes(1);
+      },
+      { timeout: 3000, interval: 20 },
+    );
   });
 
   it("toggles the hover photo on tap with a coarse pointer", async () => {

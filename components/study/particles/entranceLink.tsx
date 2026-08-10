@@ -12,7 +12,11 @@ const MAXIMUM_CYCLE_MILLISECONDS = 850;
 const MINIMUM_VELOCITY = 14;
 const MAXIMUM_VELOCITY = 40;
 
-export default function EntranceLink() {
+interface EntranceLinkProps {
+  readonly visible: boolean;
+}
+
+export default function EntranceLink({ visible }: EntranceLinkProps) {
   const { t } = useTranslation();
   const arrowReference = useRef<HTMLSpanElement>(null);
   const offset = useRef(0);
@@ -30,6 +34,9 @@ export default function EntranceLink() {
   };
 
   useAnimationFrame((time, deltaTime) => {
+    if (!visible) {
+      return;
+    }
     const arrow = arrowReference.current;
     if (!arrow) {
       return;
@@ -49,7 +56,10 @@ export default function EntranceLink() {
   return (
     <Link
       href="/home"
-      className="group flex items-center gap-3 text-poster-cream/80 transition-colors hover:text-poster-cream"
+      inert={!visible}
+      className={`group flex items-center gap-3 text-poster-cream/80 transition-opacity duration-700 hover:text-poster-cream ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
     >
       <span className="font-[family-name:var(--font-vt323)] text-xl uppercase tracking-[0.3em]">
         {t("enter")}
