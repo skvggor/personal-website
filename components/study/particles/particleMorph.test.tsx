@@ -17,6 +17,7 @@ interface WebGlStub {
   deleteProgram: ReturnType<typeof vi.fn>;
   deleteBuffer: ReturnType<typeof vi.fn>;
   getExtension: ReturnType<typeof vi.fn>;
+  uniform1f: ReturnType<typeof vi.fn>;
 }
 
 function createWebGlStub(): WebGlStub {
@@ -28,7 +29,8 @@ function createWebGlStub(): WebGlStub {
     getShaderParameter: vi.fn(() => true),
     getProgramParameter: vi.fn(() => true),
     getAttribLocation: vi.fn(() => 0),
-    getUniformLocation: vi.fn(() => ({})),
+    getUniformLocation: vi.fn((_program: unknown, name: string) => ({ name })),
+    uniform1f: vi.fn(),
     createShader: vi.fn(() => ({})),
     createProgram: vi.fn(() => ({})),
     createBuffer: vi.fn(() => ({})),
@@ -58,10 +60,12 @@ const originalGetContext = HTMLCanvasElement.prototype.getContext;
 const originalMatchMedia = window.matchMedia;
 const originalImage = globalThis.Image;
 
-function installMatchMediaMock(): void {
+function installMatchMediaMock(coarsePointer = false): void {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: vi.fn().mockImplementation(() => ({ matches: false })),
+    value: vi.fn().mockImplementation(() => ({
+      matches: coarsePointer,
+    })),
   });
 }
 
@@ -93,6 +97,7 @@ interface MountedScene {
 function mountWithWebGl(
   props: Partial<React.ComponentProps<typeof ParticleMorph>> = {},
   pixelFill = 255,
+  coarsePointer = false,
 ): MountedScene {
   const webglStub = createWebGlStub();
   const mockTwoDimensionalContext = {
@@ -112,7 +117,7 @@ function mountWithWebGl(
     }
     return webglStub;
   }) as unknown as typeof originalGetContext;
-  installMatchMediaMock();
+  installMatchMediaMock(coarsePointer);
   installFakeImage();
 
   const { container, unmount } = render(
@@ -122,6 +127,12 @@ function mountWithWebGl(
     />,
   );
   return { webglStub, container, unmount };
+}
+
+function readHoverUniformValues(webglStub: WebGlStub): number[] {
+  return webglStub.uniform1f.mock.calls
+    .filter((call) => call[0]?.name === "uHover")
+    .map((call) => call[1] as number);
 }
 
 afterEach(() => {
@@ -231,5 +242,41 @@ describe("ParticleMorph", () => {
     const fallback = await findByRole("img");
     expect(fallback.getAttribute("alt")).toBe("Particle morphing fallback");
     expect(container.querySelector("canvas")).toBeNull();
+  });
+
+  it("toggles the hover photo on tap with a coarse pointer", async () => {
+    const { webglStub, container } = mountWithWebGl(
+      { morphDurationMilliseconds: 0, stageHoldMilliseconds: 0 },
+      255,
+      true,
+    );
+    const canvas = container.querySelector("canvas") as HTMLCanvasElement;
+
+    await vi.waitFor(
+      () => {
+        expect(webglStub.drawArrays).toHaveBeenCalled();
+      },
+      { timeout: 3000, interval: 20 },
+    );
+
+    const lastHoverValue = () => readHoverUniformValues(webglStub).at(-1) ?? 0;
+
+    expect(lastHoverValue()).toBeLessThan(0.1);
+
+    fireEvent.click(canvas);
+    await vi.waitFor(
+      () => {
+        expect(lastHoverValue()).toBeGreaterThan(0.9);
+      },
+      { timeout: 3000, interval: 20 },
+    );
+
+    fireEvent.click(canvas);
+    await vi.waitFor(
+      () => {
+        expect(lastHoverValue()).toBeLessThan(0.1);
+      },
+      { timeout: 3000, interval: 20 },
+    );
   });
 });

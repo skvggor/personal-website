@@ -16,6 +16,7 @@ import {
 const MAXIMUM_WORKING_DIMENSION = 512;
 const DIGIT_RENDER_SIZE = 256;
 const DIGIT_FONT_SCALE = 1.35;
+const FONT_LOAD_TIMEOUT_MILLISECONDS = 2000;
 
 export interface ParticleStage {
   readonly positions: Float32Array;
@@ -43,6 +44,18 @@ function createOffscreenContext(
     throw new Error(`Failed to acquire 2D context for ${purpose}`);
   }
   return context;
+}
+
+function settleWithTimeout(
+  pendingOperation: Promise<unknown>,
+  timeoutMilliseconds: number,
+): Promise<void> {
+  return Promise.race([
+    pendingOperation.then(() => undefined),
+    new Promise<void>((resolve) => {
+      setTimeout(resolve, timeoutMilliseconds);
+    }),
+  ]);
 }
 
 export function readFontFamily(variableName: string): string {
@@ -188,11 +201,17 @@ export async function loadStageData(
   fontVariable: string,
 ): Promise<StageData> {
   if (typeof document !== "undefined" && document.fonts) {
-    await document.fonts.ready;
+    await settleWithTimeout(
+      document.fonts.ready,
+      FONT_LOAD_TIMEOUT_MILLISECONDS,
+    );
     const fontFamilyForLoad = readFontFamily(fontVariable);
-    await document.fonts
-      .load(`700 200px ${fontFamilyForLoad}`)
-      .catch(() => undefined);
+    await settleWithTimeout(
+      document.fonts
+        .load(`700 200px ${fontFamilyForLoad}`)
+        .catch(() => undefined),
+      FONT_LOAD_TIMEOUT_MILLISECONDS,
+    );
   }
   const fontFamily = readFontFamily(fontVariable);
 

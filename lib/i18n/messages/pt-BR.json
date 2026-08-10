@@ -17,6 +17,7 @@
     "serviceUnavailable": "serviço {serviceName} indisponível"
   },
   "location": "Peruíbe, São Paulo, Brasil.",
+  "enter": "entrar",
   "announcement": {
     "klangbild": "Conheça meu novo projeto Klangbild para gerar visualizadores de música em vídeo 4K."
   },

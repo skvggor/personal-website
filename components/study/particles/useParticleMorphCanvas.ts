@@ -84,6 +84,7 @@ export function useParticleMorphCanvas(
     let resizeListener: (() => void) | undefined;
     let mouseMoveListener: ((event: MouseEvent) => void) | undefined;
     let mouseLeaveListener: (() => void) | undefined;
+    let tapListener: (() => void) | undefined;
     const createdBuffers: WebGLBuffer[] = [];
 
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
@@ -99,14 +100,21 @@ export function useParticleMorphCanvas(
     resizeListener = () => configureDrawingBuffer();
     window.addEventListener("resize", resizeListener);
 
-    mouseMoveListener = () => {
-      hoverReference.current = true;
-    };
-    mouseLeaveListener = () => {
-      hoverReference.current = false;
-    };
-    canvas.addEventListener("mousemove", mouseMoveListener);
-    canvas.addEventListener("mouseleave", mouseLeaveListener);
+    if (isCoarsePointer) {
+      tapListener = () => {
+        hoverReference.current = !hoverReference.current;
+      };
+      canvas.addEventListener("click", tapListener);
+    } else {
+      mouseMoveListener = () => {
+        hoverReference.current = true;
+      };
+      mouseLeaveListener = () => {
+        hoverReference.current = false;
+      };
+      canvas.addEventListener("mousemove", mouseMoveListener);
+      canvas.addEventListener("mouseleave", mouseLeaveListener);
+    }
 
     let program: WebGLProgram | null = null;
     let startTime = 0;
@@ -324,6 +332,9 @@ export function useParticleMorphCanvas(
       }
       if (mouseLeaveListener) {
         canvas.removeEventListener("mouseleave", mouseLeaveListener);
+      }
+      if (tapListener) {
+        canvas.removeEventListener("click", tapListener);
       }
       if (program) {
         renderingContext.deleteProgram(program);
