@@ -1,10 +1,7 @@
 // @vitest-environment jsdom
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  loadStageData,
-  readFontFamily,
-} from "@/components/study/particles/pipeline";
+import { loadStageData, readFontFamily } from "@/components/particles/pipeline";
 
 const originalGetContext = HTMLCanvasElement.prototype.getContext;
 const originalImage = globalThis.Image;

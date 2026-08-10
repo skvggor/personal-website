@@ -4,7 +4,7 @@ import NextImage from "next/image";
 import {
   type ParticleMorphConfiguration,
   useParticleMorphCanvas,
-} from "@/components/study/particles/useParticleMorphCanvas";
+} from "@/components/particles/useParticleMorphCanvas";
 
 export interface ParticleMorphProps {
   readonly width: number;

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import type { StageData } from "@/components/study/particles/pipeline";
-import { loadStageData } from "@/components/study/particles/pipeline";
+import type { StageData } from "@/components/particles/pipeline";
+import { loadStageData } from "@/components/particles/pipeline";
 import {
   bindAttribute,
   createProgram,
   uploadBuffer,
-} from "@/components/study/particles/webgl";
+} from "@/components/particles/webgl";
 import { resolveColor } from "@/lib/particles/color";
 import { easeInOutCubic } from "@/lib/particles/easing";
 import {

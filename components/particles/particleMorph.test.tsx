@@ -2,7 +2,7 @@
 
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import ParticleMorph from "@/components/study/particles/particleMorph";
+import ParticleMorph from "@/components/particles/particleMorph";
 
 const baseProps = {
   width: 100,

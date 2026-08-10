@@ -2,7 +2,7 @@
 
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import EntranceLink from "@/components/study/particles/entranceLink";
+import EntranceLink from "@/components/particles/entranceLink";
 import { LanguageProvider } from "@/lib/i18n/context";
 
 function createStorageMock(): Storage {

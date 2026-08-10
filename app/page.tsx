@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import EntranceLink from "@/components/study/particles/entranceLink";
-import ParticleMorph from "@/components/study/particles/particleMorph";
+import EntranceLink from "@/components/particles/entranceLink";
+import ParticleMorph from "@/components/particles/particleMorph";
 
 const POSTER_BACKGROUND = "#301b02";
 

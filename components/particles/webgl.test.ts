@@ -4,7 +4,7 @@ import {
   compileShader,
   createProgram,
   uploadBuffer,
-} from "@/components/study/particles/webgl";
+} from "@/components/particles/webgl";
 
 const VERTEX_SHADER = 35633;
 const FRAGMENT_SHADER = 35632;

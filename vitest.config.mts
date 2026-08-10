@@ -14,7 +14,7 @@ export default defineConfig({
     globals: true,
     coverage: {
       provider: "v8",
-      include: ["lib/particles/**/*.ts", "components/study/**/*.{ts,tsx}"],
+      include: ["lib/particles/**/*.ts", "components/particles/**/*.{ts,tsx}"],
       exclude: ["**/*.test.*", "**/*.d.ts"],
       thresholds: { lines: 80, functions: 80, statements: 80, branches: 80 },
     },
