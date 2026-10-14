@@ -30,6 +30,8 @@ export interface ParticleMorphConfiguration {
   readonly strideOverride: number | undefined;
   readonly digitFontVariable: string;
   readonly hoverMorphMilliseconds: number;
+  readonly hoverHintIntervalMilliseconds: number;
+  readonly hoverHintDurationMilliseconds: number;
   readonly onInitialAnimationComplete?: () => void;
 }
 
@@ -62,6 +64,8 @@ export function useParticleMorphCanvas(
     strideOverride,
     digitFontVariable,
     hoverMorphMilliseconds,
+    hoverHintIntervalMilliseconds,
+    hoverHintDurationMilliseconds,
     onInitialAnimationComplete,
   } = configuration;
 
@@ -104,6 +108,8 @@ export function useParticleMorphCanvas(
     let mouseMoveListener: ((event: MouseEvent) => void) | undefined;
     let mouseLeaveListener: (() => void) | undefined;
     let tapListener: (() => void) | undefined;
+    let hoverHintInterval: number | undefined;
+    let hoverHintResetTimeout: number | undefined;
     const createdBuffers: WebGLBuffer[] = [];
 
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
@@ -119,20 +125,24 @@ export function useParticleMorphCanvas(
     resizeListener = () => configureDrawingBuffer();
     window.addEventListener("resize", resizeListener);
 
-    if (isCoarsePointer) {
-      tapListener = () => {
-        hoverReference.current = !hoverReference.current;
-      };
-      canvas.addEventListener("click", tapListener);
-    } else {
-      mouseMoveListener = () => {
-        hoverReference.current = true;
-      };
-      mouseLeaveListener = () => {
-        hoverReference.current = false;
-      };
-      canvas.addEventListener("mousemove", mouseMoveListener);
-      canvas.addEventListener("mouseleave", mouseLeaveListener);
+    const hasAutomaticHoverHint = hoverHintIntervalMilliseconds > 0;
+
+    if (!hasAutomaticHoverHint) {
+      if (isCoarsePointer) {
+        tapListener = () => {
+          hoverReference.current = !hoverReference.current;
+        };
+        canvas.addEventListener("click", tapListener);
+      } else {
+        mouseMoveListener = () => {
+          hoverReference.current = true;
+        };
+        mouseLeaveListener = () => {
+          hoverReference.current = false;
+        };
+        canvas.addEventListener("mousemove", mouseMoveListener);
+        canvas.addEventListener("mouseleave", mouseLeaveListener);
+      }
     }
 
     let program: WebGLProgram | null = null;
@@ -340,6 +350,18 @@ export function useParticleMorphCanvas(
         };
         startTime = performance.now();
         animationFrameReference.current = requestAnimationFrame(render);
+
+        if (hasAutomaticHoverHint) {
+          hoverHintInterval = window.setInterval(() => {
+            hoverReference.current = true;
+            if (hoverHintResetTimeout) {
+              window.clearTimeout(hoverHintResetTimeout);
+            }
+            hoverHintResetTimeout = window.setTimeout(() => {
+              hoverReference.current = false;
+            }, hoverHintDurationMilliseconds);
+          }, hoverHintIntervalMilliseconds);
+        }
       })
       .catch((error: unknown) => {
         console.error("[particleMorph] stage loading failed:", error);
@@ -364,6 +386,12 @@ export function useParticleMorphCanvas(
       if (tapListener) {
         canvas.removeEventListener("click", tapListener);
       }
+      if (hoverHintInterval) {
+        window.clearInterval(hoverHintInterval);
+      }
+      if (hoverHintResetTimeout) {
+        window.clearTimeout(hoverHintResetTimeout);
+      }
       if (program) {
         renderingContext.deleteProgram(program);
       }
@@ -386,6 +414,8 @@ export function useParticleMorphCanvas(
     strideOverride,
     digitFontVariable,
     hoverMorphMilliseconds,
+    hoverHintIntervalMilliseconds,
+    hoverHintDurationMilliseconds,
   ]);
 
   return { canvasReference, renderFallback };

@@ -220,7 +220,7 @@ export async function loadStageData(
   const stages: ParticleStage[] = [];
   const random = createRandom(31);
 
-  for (let digit = countdownFrom; digit >= 0; digit -= 1) {
+  for (let digit = countdownFrom; digit > 0; digit -= 1) {
     const stage = await extractConcreteStage(
       String(digit),
       count,

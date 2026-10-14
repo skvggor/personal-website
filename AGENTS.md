@@ -1,94 +1,30 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# Project guide
 
-# This is NOT the Next.js you know
+Personal website built with Next.js 16, React 19, TypeScript 7, Tailwind CSS 4,
+Motion, Phosphor Icons, Biome and Vitest.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## Rules
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+- Read the relevant Next.js guide in `node_modules/next/dist/docs/` before changing
+  Next.js APIs.
+- Use strict TypeScript and the `@/*` path alias. Relative imports are only for
+  files in the same directory.
+- Keep pure particle math in `lib/particles` and DOM/WebGL integration in
+  `components/particles`.
+- Components should stay thin and new types should be colocated. Match existing
+  conventions when editing legacy files.
+- Preserve themes and the no-flash theme bootstrap in `app/globals.css` and
+  `app/layout.tsx`. Add translations to both message files in
+  `lib/i18n/messages/`.
+- Write code and identifiers in English. Avoid unnecessary comments and `any`.
 
-<!-- END:nextjs-agent-rules -->
-
-# AGENTS.md
-
-Guidance for AI agents (and humans) working in this repository. Read this before editing.
-
-This is the personal website of Marcos Lima (skvggor) — a single-page Next.js site with a Japanese constructivist / おまかせ (omakase) poster aesthetic.
-
-## Stack
-
-- **Next.js 16** (App Router, Turbopack) + **React 19**
-- **TypeScript 7**, strict
-- **Tailwind CSS 4** (via `@tailwindcss/postcss`; directives live in `app/globals.css`)
-- **Motion** (Framer Motion) and **Phosphor Icons**
-- **Biome 2.x** — the only linter/formatter (no ESLint/Prettier)
-- **Vitest 4** with jsdom and v8 coverage
-
-`output: "standalone"` is enabled for the Docker build. Remote `next/image` hosts are allow-listed in `next.config.ts` (Last.fm).
-
-## Path alias
-
-`@/*` maps to the repository root (see `tsconfig.json`, mirrored in `vitest.config.mts`). Always import with `@/...`; relative imports are only acceptable within the same directory.
-
-## Project layout
-
-```
-app/          App Router. Root layout, page, globals.css, robots.ts, sitemap.ts.
-components/   React components, grouped one folder per feature.
-lib/          Framework-agnostic utilities: i18n, transitions, particles.
-content/      Markdown content (e.g. announcement-bar.md).
-public/       Static assets.
-scripts/      Docker entrypoint and screenshot tooling.
-proxy.ts      Per-request interceptor (this is the middleware equivalent).
-```
-
-### Component conventions
-
-There are two coexisting styles — match the neighbours of the file you edit:
-
-- **Legacy feature components** ship as a pair: `feature/feature.tsx` (implementation) + `feature/feature.d.ts` (props/content interfaces).
-- **Newer components** keep types co-located in the single `.tsx`/`.ts` file. Prefer this for new work.
-
-### `lib/particles` vs `components/particles`
-
-The particle-morphing subsystem is split by responsibility:
-
-- `lib/particles/*.ts` — pure, framework-agnostic math (extraction, easing, noise, concrete relief, timeline, aspect correction, runtime helpers). No DOM, fully unit-tested.
-- `components/particles/` — the DOM/WebGL glue: `pipeline.ts` (image + font loading), `webgl.ts` (shader/buffer/attribute helpers), `useParticleMorphCanvas.ts` (the render-loop hook), `particleMorph.tsx` (thin presentational component), `shaders.ts` (GLSL).
-
-Keep that boundary: pure logic belongs in `lib/particles`, side effects in the component layer.
-
-## Styling and theming
-
-- Six color themes (Terracotta, Sumi, Matcha, Washi, Ai, Sakura) defined as CSS custom properties in `app/globals.css`, switched via the `data-theme` attribute on `<html>`.
-- A no-flash bootstrap script in `app/layout.tsx` reads the saved theme from `localStorage` before paint. Do not remove it.
-- Fonts are loaded with `next/font/google` and exposed as CSS variables (`--font-shippori`, `--font-vt323`).
-
-## Internationalization
-
-`lib/i18n/context.tsx` provides a client `LanguageProvider` with `locale` (`"en"` | `"pt-BR"`) and a `t(key, replacements?)` function. Messages live in `lib/i18n/messages/en.json` and `pt-BR.json`. Browser locale is auto-detected. When adding copy, add it to both message files.
-
-## Testing
-
-- `lib/particles/**/*.ts` and `components/particles/**/*.{ts,tsx}` are measured for coverage.
-- Global thresholds: **80%** statements / branches / functions / lines. Aim for ≥80% on every changed file.
-- Component/DOM tests must start with `// @vitest-environment jsdom`.
-- Never use `any` in tests — use real types or `Partial`/`Pick` utilities for mocks.
-
-## Commands
+## Validation
 
 ```bash
-npm run dev              # dev server (Turbopack)
-npm run build            # type-check + production build
-npm run type-check       # tsc --noEmit
-npm run lint             # biome check .
-npm test                 # vitest run
-npm run test:watch       # vitest
-npm run test:coverage    # vitest run --coverage
+npm run lint
+npm run type-check
+npm test
+npm run build
 ```
 
-## Engineering rules (project-wide)
-
-- Code and identifiers are in **English**. Communicate with the maintainer in Portuguese.
-- No throwaway comments; be concise. Use full, descriptive names (no abbreviations except established/industry ones).
-- Prefer pure, unit-testable functions; keep React components thin.
-- Never commit with conventional-commit prefixes (`feat:`, `chore:`, …) or attribution trailers.
+Maintain at least 80% coverage. Use the `jsdom` Vitest environment for DOM tests.

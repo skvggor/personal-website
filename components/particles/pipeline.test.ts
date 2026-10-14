@@ -88,7 +88,7 @@ describe("loadStageData", () => {
     );
 
     expect(load).toHaveBeenCalled();
-    expect(data.stages.length).toBe(4);
+    expect(data.stages.length).toBe(3);
     expect(data.count).toBeGreaterThan(0);
     expect(data.seeds.length).toBe(data.count);
     expect(data.hover.positions.length).toBe(data.count * 2);
@@ -107,7 +107,7 @@ describe("loadStageData", () => {
       0,
       "--font-shippori",
     );
-    expect(data.stages.length).toBe(2);
+    expect(data.stages.length).toBe(1);
   });
 
   it("proceeds when the font never settles instead of hanging", async () => {
@@ -122,7 +122,7 @@ describe("loadStageData", () => {
       0,
       "--font-shippori",
     );
-    expect(data.stages.length).toBe(2);
+    expect(data.stages.length).toBe(1);
   });
 
   it("rejects when the 2D context is unavailable", async () => {

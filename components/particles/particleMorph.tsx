@@ -22,6 +22,8 @@ export interface ParticleMorphProps {
   readonly digitFontVariable?: string;
   readonly circular?: boolean;
   readonly hoverMorphMilliseconds?: number;
+  readonly hoverHintIntervalMilliseconds?: number;
+  readonly hoverHintDurationMilliseconds?: number;
   readonly onInitialAnimationComplete?: () => void;
 }
 
@@ -44,6 +46,8 @@ export default function ParticleMorph({
   digitFontVariable = DEFAULT_DIGIT_FONT_VARIABLE,
   circular = false,
   hoverMorphMilliseconds = 700,
+  hoverHintIntervalMilliseconds = 0,
+  hoverHintDurationMilliseconds = 1400,
   onInitialAnimationComplete,
 }: ParticleMorphProps) {
   const configuration: ParticleMorphConfiguration = {
@@ -61,6 +65,8 @@ export default function ParticleMorph({
     strideOverride,
     digitFontVariable,
     hoverMorphMilliseconds,
+    hoverHintIntervalMilliseconds,
+    hoverHintDurationMilliseconds,
     onInitialAnimationComplete,
   };
 
